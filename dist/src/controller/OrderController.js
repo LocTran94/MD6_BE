@@ -42,18 +42,23 @@ class OrderController {
                         response.status(200).json(" Bạn chưa thể thuê dịch vụ");
                     }
                     else {
-                        if (checkTime >= 0) {
+                        if (y > order.dateOfOrder) {
+                            order.total = (time * 24 + (x.getHours() - y.getHours())) * price;
+                            order = await this.oderService.saveOrder(order);
+                            response.status(200).json(order);
+                        }
+                        else if (y == order.dateOfOrder) {
                             if (y.getHours() > (order.dateOfOrder).getHours()) {
-                                order.total = (time * 24 + (x.getHours() - y.getHours())) * price;
+                                order.total = (x.getHours() - y.getHours()) * price;
                                 order = await this.oderService.saveOrder(order);
                                 response.status(200).json(order);
                             }
                             else {
-                                response.json('starTime is false');
+                                return "hãy chọn lại thời gian bắt đầu thuê";
                             }
                         }
                         else {
-                            response.json('starTime is false');
+                            return "hãy chọn lại ngày bắt đầu thuê";
                         }
                     }
                 }

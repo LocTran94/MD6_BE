@@ -42,31 +42,38 @@ class OrderController {
             let x = new Date(order.endTime)
             let y = new Date(order.startTime)
             order.dateOfOrder = new Date()
-
-
-
             let time = await this.oderService.subtractionDate(order.startTime, order.endTime)// tính ngày chênh lệnh
-            let checkTime = await this.oderService.subtractionDate(y, order.dateOfOrder)// tính ngày chênh lệnh
-            let checkOrder = await this.oderService.getOrderInDay(order.idPost, order.startTime,order.endTime)// tính ngày chênh
+
+            let checkOrder = await this.oderService.getOrderInDay(order.idPost, order.startTime, order.endTime)// tính ngày chênh
 
             let price = await this.postService.findPrice(order.idPost)
             if (time >= 0) {
                 if (checkOrder == false) {
                     response.status(200).json(" Bạn chưa thể thuê dịch vụ")
                 } else {
-                    if (checkTime >= 0) {
+
+
+                    if (y > order.dateOfOrder) {
+
+                        order.total = (time * 24 + (x.getHours() - y.getHours())) * price
+                        order = await this.oderService.saveOrder(order);
+                        response.status(200).json(order)
+
+                    } else if (y == order.dateOfOrder) {
 
                         if (y.getHours() > (order.dateOfOrder).getHours()) {
-                            order.total = (time * 24 + (x.getHours() - y.getHours())) * price
-                            order = await this.oderService.saveOrder(order);
 
+                            order.total = (x.getHours() - y.getHours()) * price
+                            order = await this.oderService.saveOrder(order);
                             response.status(200).json(order)
                         } else {
-                            response.json('starTime is false')
+                            return "hãy chọn lại thời gian bắt đầu thuê"
                         }
+
                     } else {
-                        response.json('starTime is false')
+                        return "hãy chọn lại ngày bắt đầu thuê"
                     }
+
 
                 }
 

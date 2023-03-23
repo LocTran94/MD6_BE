@@ -51,9 +51,11 @@ class OrderService {
                             join user u on p.idUser = u.idUser
                            
                    where o.idPost = ${id}
-                     and  '${startTime}' <= o.endTime and o.endTime <= '${endTime}'
+                     and  ('${startTime}' <= o.endTime and o.endTime <= '${endTime}')
+                      or ('${startTime}' <= o.startTime and o.startTime <= '${endTime}')
                      `;
             let orders = await this.orderRepository.query(sql);
+            console.log(orders);
             if (orders.length === 0) {
                 return true;
             }
@@ -62,6 +64,7 @@ class OrderService {
             }
         };
         this.subtractionDate = async (startTime, endTime) => {
+            console.log(9999999999, startTime, endTime);
             let sql = `select DATEDIFF( '${endTime}','${startTime}' ) as date`;
             let time = await this.orderRepository.query(sql);
             return time[0].date;
