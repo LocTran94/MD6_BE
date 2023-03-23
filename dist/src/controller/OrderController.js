@@ -65,6 +65,16 @@ class OrderController {
                 response.status(500).json(error.message);
             }
         };
+        this.changeStatusOrder = async (req, res) => {
+            try {
+                let id = req.params.id;
+                let response = await this.oderService.changeStatusOrderService(id);
+                return res.status(200).json(response);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
         this.oderService = OrderService_1.default;
         this.postService = PostService_1.default;
     }

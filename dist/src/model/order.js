@@ -36,7 +36,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ default: "Wait" }),
     __metadata("design:type", String)
-], Orders.prototype, "status", void 0);
+], Orders.prototype, "statusOrder", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         nullable: false,

@@ -4,7 +4,7 @@ export declare class Orders {
     idPost: number;
     endTime: string;
     startTime: string;
-    status: string;
+    statusOrder: string;
     dateOfOrder: Date;
     total: number;
 }

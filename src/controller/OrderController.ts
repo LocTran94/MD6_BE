@@ -77,6 +77,22 @@ class OrderController {
             response.status(500).json(error.message)
         }
     }
+
+
+    changeStatusOrder = async (req, res) => {
+
+        try {
+            let id = req.params.id
+            let response = await this.oderService.changeStatusOrderService(id)
+            return res.status(200).json(response)
+
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+
+    }
+
+
 }
 
 export default new OrderController()

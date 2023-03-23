@@ -87,7 +87,8 @@ class PostController {
 
     createPost = async (req: Request, res: Response) => {
         try {
-            let posts = await this.postService.saveService(req.body)
+            let id = req.body.idUser
+            let posts = await this.postService.saveService(req.body,id)
             res.status(200).json(posts)
         } catch (e) {
             res.status(500).json(e.message)

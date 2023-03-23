@@ -31,14 +31,15 @@ class OrderService {
         this.saveOrder = async (order) => {
             return await this.orderRepository.save(order);
         };
-        this.changeStatusOrder = async (id) => {
+        this.changeStatusOrderService = async (id) => {
             let checkOrder = await this.orderRepository.findOneBy({ idOrder: id });
+            console.log(1111111111111, checkOrder);
             if (!checkOrder) {
                 return null;
             }
             else {
-                if (checkOrder.status === 'Wait') {
-                    checkOrder.status = 'Approved';
+                if (checkOrder.statusOrder === 'Wait') {
+                    checkOrder.statusOrder = 'Approved';
                     await this.orderRepository.save(checkOrder);
                 }
             }

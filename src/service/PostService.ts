@@ -46,9 +46,16 @@ class PostService {
     }
 
 
-    saveService = async (post) => {
+    saveService = async (post,id) => {
+        let sql = `select user.role from user where idUser = ${id}`
+        let result = await this.userRepository.query(sql)
 
-        return this.postRepository.save(post);
+        if (result[0].role=== 'user'){
+            return false
+        }else {
+            return this.postRepository.save(post);
+        }
+
     };
 
 

@@ -13,7 +13,7 @@ export class Orders {
     @Column({ type: "text" })
     startTime: string;
     @Column({ default: "Wait" })
-    status: string;
+    statusOrder: string;
     @Column({
         nullable: false,
         default: () => 'DATE_ADD(NOW())',
