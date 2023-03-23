@@ -14,8 +14,9 @@ class PersonalServiceController {
 
     createPersonalService = async (req: Request, res: Response) => {
         try {
+            let idUser = req["decoded"].idUser
             let idPost = req.body.idPost
-            let personalService = await this.personalService.SavePersonalService(req.body,idPost)
+            let personalService = await this.personalService.SavePersonalService(req.body,idPost,idUser)
             res.status(200).json(personalService)
         } catch (e) {
             res.status(500).json(e.message)

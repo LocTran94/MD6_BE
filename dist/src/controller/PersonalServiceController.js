@@ -8,8 +8,9 @@ class PersonalServiceController {
     constructor() {
         this.createPersonalService = async (req, res) => {
             try {
+                let idUser = req["decoded"].idUser;
                 let idPost = req.body.idPost;
-                let personalService = await this.personalService.SavePersonalService(req.body, idPost);
+                let personalService = await this.personalService.SavePersonalService(req.body, idPost, idUser);
                 res.status(200).json(personalService);
             }
             catch (e) {

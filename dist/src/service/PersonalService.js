@@ -5,8 +5,8 @@ const personal_1 = require("../model/personal");
 const user_1 = require("../model/user");
 class PersonalService {
     constructor() {
-        this.SavePersonalService = async (personalService, idPost) => {
-            let sql = `select u.role
+        this.SavePersonalService = async (personalService, idPost, idUser) => {
+            let sql = `select u.role ,u.idUser
                    from post p
                             join user u on p.idUser = u.idUser
                    where p.idPost = ${idPost}`;
@@ -15,6 +15,9 @@ class PersonalService {
                 return false;
             }
             else {
+                if (result[0].idUser != idUser) {
+                    return false;
+                }
                 return this.personalServiceRepository.save(personalService);
             }
         };
