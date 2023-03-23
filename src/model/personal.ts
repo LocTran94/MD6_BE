@@ -1,9 +1,11 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Provision {
+export class Personal {
     @PrimaryGeneratedColumn()
-    idProvision: number;
+    idPersonalService: number;
     @Column()
-    provisionName: string;
+    idPost:  number;
+    @Column()
+    idProvision:  number;
 }

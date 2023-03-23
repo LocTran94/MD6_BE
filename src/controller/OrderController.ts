@@ -44,7 +44,7 @@ class OrderController {
             order.dateOfOrder = new Date()
             let time = await this.oderService.subtractionDate(order.startTime, order.endTime)// tính ngày chênh lệnh
 
-            let checkOrder = await this.oderService.getOrderInDay(order.idPost, order.startTime, order.endTime)// tính ngày chênh
+            let checkOrder = await this.oderService.getOrderInDay(order.idPost, order.startTime, order.endTime)
 
             let price = await this.postService.findPrice(order.idPost)
             if (time >= 0) {
@@ -61,9 +61,8 @@ class OrderController {
 
                     } else if (y == order.dateOfOrder) {
 
-                        if (y.getHours() > (order.dateOfOrder).getHours()) {
-
-                            order.total = (x.getHours() - y.getHours()) * price
+                        if (y.getHours() >= (order.dateOfOrder).getHours()) {
+                            order.total = (time * 24*price +    x.getHours() - y.getHours()) * price
                             order = await this.oderService.saveOrder(order);
                             response.status(200).json(order)
                         } else {

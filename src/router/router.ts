@@ -5,6 +5,7 @@ import {adminRouter} from "./admin-router";
 import {postRouter} from "./post-router";
 import {provisionRouter} from "./provision-router";
 import {orderRouter} from "./order-router";
+import {personalServiceRouter} from "./personalService-router";
 
 
 export  const router = Router()
@@ -14,5 +15,6 @@ router.use('/admins',adminRouter);
 router.use('/post',postRouter);
 router.use('/provision',provisionRouter);
 router.use('/order',orderRouter);
+router.use('/personalService',personalServiceRouter);
 
 

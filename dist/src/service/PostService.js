@@ -78,6 +78,8 @@ class PostService {
             let sql = `select *
                    from user u
                             join post p on p.idUser = u.idUser
+                            join personal ps on ps.idPost = p.idPost
+                            join provision pr on ps.idProvision = pr.idProvision
 
                    where p.idPost = ${idPost}`;
             let profile = await this.postRepository.query(sql);

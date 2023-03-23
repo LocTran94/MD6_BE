@@ -47,8 +47,8 @@ class OrderController {
                             response.status(200).json(order);
                         }
                         else if (y == order.dateOfOrder) {
-                            if (y.getHours() > (order.dateOfOrder).getHours()) {
-                                order.total = (x.getHours() - y.getHours()) * price;
+                            if (y.getHours() >= (order.dateOfOrder).getHours()) {
+                                order.total = (time * 24 * price + x.getHours() - y.getHours()) * price;
                                 order = await this.oderService.saveOrder(order);
                                 response.status(200).json(order);
                             }
