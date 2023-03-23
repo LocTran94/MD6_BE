@@ -297,6 +297,15 @@ class UserServices {
     }
 
 
+    findByGmailService = async (idUser)=>{
+        let sql = `SELECT u.gmail
+                   FROM user u
+                   where  u.idUser = ${idUser}`
+        let gmail = await this.userRepository.query(sql)
+        return gmail;
+
+    }
+
 }
 
 export default new UserServices();

@@ -30,6 +30,7 @@ declare class UserServices {
     findByNameService: (name: any) => Promise<any>;
     findByGenderService: (gender: any) => Promise<any>;
     findByBirthdayService: (yearOne: any, yearSecond: any) => Promise<any>;
+    findByGmailService: (idUser: any) => Promise<any>;
 }
 declare const _default: UserServices;
 export default _default;

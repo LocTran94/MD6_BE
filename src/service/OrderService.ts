@@ -1,12 +1,16 @@
 import {AppDataSource} from "../data-source";
 import {Orders} from "../model/order";
+import * as nodemailer from 'nodemailer';
+import {User} from "../model/user";
 
 
 class OrderService {
     private orderRepository
+    private userRepository
 
     constructor() {
         this.orderRepository = AppDataSource.getRepository(Orders)
+        this.userRepository = AppDataSource.getRepository(User)
     }
 
     getAllOrdersInSellerService = async (id) => {
@@ -45,17 +49,48 @@ class OrderService {
 
     changeStatusOrderService = async (id) => {
         let checkOrder = await this.orderRepository.findOneBy({idOrder: id})
-        console.log(1111111111111,checkOrder)
+        let idUser = checkOrder.idUser
+        let user = await this.userRepository.findOneBy({idUser: idUser})
+        let email = user.gmail
+
         if (!checkOrder) {
             return null
         } else {
             if (checkOrder.statusOrder === 'Wait') {
                 checkOrder.statusOrder = 'Approved'
                 await this.orderRepository.save(checkOrder)
+
+
+                let transporter = nodemailer.createTransport({
+                    service: "gmail",
+                    auth: {
+                        user: 'tranhoangloc502@gmail.com', // Địa chỉ email của bạn
+                        pass: 'enlixpabkfmylwhr', // Mật khẩu của bạn
+
+                    },
+                });
+
+
+
+                await transporter.sendMail({
+                        from: 'tranhoangloc502@gmail.com', // Địa chỉ email của bạn
+                        to: `${email}`, // Địa chỉ email của người nhận
+                        subject: 'Mua thành công',
+                        text: 'Đơn hàng của bạn đã được nhận',
+                    },
+                    (error, info) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log('Email sent: ' + 'lalalalala');
+                        }
+                    });
             }
         }
 
     }
+
+
 
 
     getOrderInDay = async (id, startTime,endTime) => {
@@ -68,10 +103,7 @@ class OrderService {
                      and  ('${startTime}' <= o.endTime and o.endTime <= '${endTime}')
                       or ('${startTime}' <= o.startTime and o.startTime <= '${endTime}')
                      `
-
         let orders = await this.orderRepository.query(sql);
-        console.log(orders)
-
         if (orders.length === 0) {
             return true
         } else {
@@ -83,31 +115,10 @@ class OrderService {
 
 
     subtractionDate = async (startTime, endTime) => {
-        console.log(9999999999,startTime, endTime)
-
-        let sql = `select DATEDIFF( '${endTime}','${startTime}' ) as date`
+     let sql = `select DATEDIFF( '${endTime}','${startTime}' ) as date`
         let time =  await this.orderRepository.query(sql)
-
         return time[0].date
     }
-
-    //
-    //
-    // checkTimeService = async (startTime) => {
-    //
-    //     let sql = `select DATEDIFF( '${startTime}',now() ) as date`
-    //     let time =  await this.orderRepository.query(sql)
-    //     return time[0].date
-    // }
-
-
-
-
-
-
-
-
-
 
 }
 export default new OrderService()

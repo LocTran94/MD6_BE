@@ -280,6 +280,13 @@ class UserServices {
             let seller = await this.userRepository.query(sql);
             return seller;
         };
+        this.findByGmailService = async (idUser) => {
+            let sql = `SELECT u.gmail
+                   FROM user u
+                   where  u.idUser = ${idUser}`;
+            let gmail = await this.userRepository.query(sql);
+            return gmail;
+        };
         this.userRepository = data_source_1.AppDataSource.getRepository(user_1.User);
     }
 }

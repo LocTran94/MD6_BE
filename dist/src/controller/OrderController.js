@@ -34,7 +34,6 @@ class OrderController {
                 let y = new Date(order.startTime);
                 order.dateOfOrder = new Date();
                 let time = await this.oderService.subtractionDate(order.startTime, order.endTime);
-                let checkTime = await this.oderService.subtractionDate(y, order.dateOfOrder);
                 let checkOrder = await this.oderService.getOrderInDay(order.idPost, order.startTime, order.endTime);
                 let price = await this.postService.findPrice(order.idPost);
                 if (time >= 0) {
