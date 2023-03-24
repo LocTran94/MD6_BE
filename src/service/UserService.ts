@@ -46,6 +46,21 @@ class UserServices {
     }
 
 
+
+
+    getAddVipService = async () => {
+        let sql = `select *
+                   from user
+                   where addVip = 'Yes'`
+        let users = await this.userRepository.query(sql);
+        return users;
+    }
+
+
+
+
+
+
     getMyProfile = async (idUser) => {
 
 
@@ -105,7 +120,7 @@ class UserServices {
                         role: userCheck.role
                     }
                     const token = jwt.sign(payload, SECRET, {
-                        expiresIn: 36000000
+                        expiresIn: 360000000
                     });
                     let userRes = {
                         idUser: userCheck.idUser,
@@ -163,6 +178,35 @@ class UserServices {
         }
 
     }
+
+
+
+
+    changeAddVip = async (id,idUser) => {
+        let checkSeller = await this.userRepository.findOneBy({idUser: id})
+
+        if (!checkSeller) {
+            return null
+        } else {
+            if (checkSeller.role != 'seller' && id === idUser) {
+                return false
+            }
+            else{
+                if (checkSeller.addVip === 'No') {
+                    checkSeller.addVip = 'Yes'
+                    await this.userRepository.save(checkSeller)
+                }
+            }
+
+        }
+
+    }
+
+
+
+
+
+
 
 
     changeCategory = async (id) => {
@@ -258,6 +302,21 @@ class UserServices {
             }
         }
 
+    }
+
+    changeSeller = async (id)=>{
+        let checkUser = await this.userRepository.findOneBy({idUser: id})
+        if (!checkUser) {
+            return null
+        }else {
+            if (checkUser.role == 'seller'){
+                checkUser.role = 'Vip'
+                await this.userRepository.save(checkUser)
+                return "Bạn đã duyệt thành công"
+            }else {
+                return false
+            }
+        }
     }
 
 

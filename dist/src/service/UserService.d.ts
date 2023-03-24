@@ -4,6 +4,7 @@ declare class UserServices {
     getAllUserService: () => Promise<any>;
     getUserRequest: () => Promise<any>;
     getWaitUser: () => Promise<any>;
+    getAddVipService: () => Promise<any>;
     getMyProfile: (idUser: any) => Promise<any>;
     checkOldPassword: (idUser: any, password: any) => Promise<boolean | "User not found">;
     changePasswordService: (idUser: any, password: any) => Promise<any>;
@@ -23,10 +24,12 @@ declare class UserServices {
     }>;
     offlineService: (id: any) => Promise<any>;
     changeStatus: (id: any) => Promise<string>;
+    changeAddVip: (id: any, idUser: any) => Promise<boolean>;
     changeCategory: (id: any) => Promise<any>;
     removeUserService: (id: any) => Promise<any>;
     userRequest: (id: any) => Promise<string>;
     changeRole: (id: any) => Promise<"Bạn chưa đủ tuổi" | " Bạn đã đăng ký thành công">;
+    changeSeller: (id: any) => Promise<false | "Bạn đã duyệt thành công">;
     findByNameService: (name: any) => Promise<any>;
     findByGenderService: (gender: any) => Promise<any>;
     findByBirthdayService: (yearOne: any, yearSecond: any) => Promise<any>;

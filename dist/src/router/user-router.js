@@ -17,4 +17,5 @@ exports.userRouter.put('/changePassword/:id', UserController_1.default.changePas
 exports.userRouter.get('/findByName/:name', UserController_1.default.findByName);
 exports.userRouter.get('/findByGender/:gender', UserController_1.default.findByGender);
 exports.userRouter.get('/findByBirthday', UserController_1.default.findByBirthday);
+exports.userRouter.get('/userAskVip/:id', UserController_1.default.checkAddVip);
 //# sourceMappingURL=user-router.js.map

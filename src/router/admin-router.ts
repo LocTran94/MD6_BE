@@ -12,5 +12,6 @@ adminRouter.get('/checkAsk',adminController.getAskUser)
 adminRouter.get('/changeRole/:id',adminController.changeRoleUser)
 adminRouter.get('/AddUser',adminController.getAddUser)
 adminRouter.get('/changeCategory/:id',adminController.changeCategoryUser)
-
+adminRouter.get('/getAddVip',adminController.getAddVip)
+adminRouter.get('/changeSellerToVip/:id',adminController.changeSellerToVip)
 

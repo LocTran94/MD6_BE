@@ -101,6 +101,27 @@ class UserController {
     }
 
 
+
+
+    checkAddVip = async (req, res) => {
+        try {
+            let idUser = req["decoded"].idUser
+            let id = req.params.id
+            let response = await this.userServices.changeAddVip(id,idUser)
+            return res.status(200).json(response)
+
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
+
+
+
+
+
+
+
+
     findByName = async (req, res) => {
         try {
             let name = req.params.name

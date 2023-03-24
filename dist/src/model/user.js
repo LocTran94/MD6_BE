@@ -57,6 +57,10 @@ __decorate([
     (0, typeorm_1.Column)({ default: "Wait" }),
     __metadata("design:type", String)
 ], User.prototype, "category", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: "No" }),
+    __metadata("design:type", String)
+], User.prototype, "addVip", void 0);
 User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

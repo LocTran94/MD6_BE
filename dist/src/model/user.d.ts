@@ -10,4 +10,5 @@ export declare class User {
     gender: string;
     ask: string;
     category: string;
+    addVip: string;
 }

@@ -24,5 +24,6 @@ export class User {
     ask: string;
     @Column({ default: "Wait" })
     category: string;
-
+    @Column({ default: "No" })
+    addVip: string;
 }

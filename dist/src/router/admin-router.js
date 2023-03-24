@@ -17,4 +17,6 @@ exports.adminRouter.get('/checkAsk', AdminController_1.default.getAskUser);
 exports.adminRouter.get('/changeRole/:id', AdminController_1.default.changeRoleUser);
 exports.adminRouter.get('/AddUser', AdminController_1.default.getAddUser);
 exports.adminRouter.get('/changeCategory/:id', AdminController_1.default.changeCategoryUser);
+exports.adminRouter.get('/getAddVip', AdminController_1.default.getAddVip);
+exports.adminRouter.get('/changeSellerToVip/:id', AdminController_1.default.changeSellerToVip);
 //# sourceMappingURL=admin-router.js.map

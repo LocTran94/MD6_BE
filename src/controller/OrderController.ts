@@ -104,7 +104,7 @@ class OrderController {
     changeStatusOrderInUserController = async (req, res) => {
 
         try {
-            let idUser =   req["decoded"].idUser
+            let idUser = req["decoded"].idUser
             let id = req.params.id
             let response = await this.oderService.changeStatusOrderInUser(id,idUser)
             return res.status(200).json(response)

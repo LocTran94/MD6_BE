@@ -55,6 +55,20 @@ class AdminController {
     }
 
 
+
+
+    getAddVip = async (req: Request, res: Response) => {
+        try {
+            let response = await this.userServices.getAddVipService()
+            return res.status(200).json(response)
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
+
+
+
+
     getAddUser = async (req: Request, res: Response) => {
         try {
             let response = await this.userServices.getWaitUser();
@@ -70,6 +84,21 @@ class AdminController {
         try {
             let id = req.params.id
             let response = await this.userServices.changeRole(id)
+            return res.status(200).json(response)
+
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+
+    }
+
+
+
+    changeSellerToVip = async (req, res) => {
+
+        try {
+            let id = req.params.id
+            let response = await this.userServices.changeSeller(id)
             return res.status(200).json(response)
 
         } catch (e) {
