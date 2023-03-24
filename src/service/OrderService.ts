@@ -71,7 +71,6 @@ class OrderService {
                 });
 
 
-
                 await transporter.sendMail({
                         from: 'tranhoangloc502@gmail.com', // Địa chỉ email của bạn
                         to: `${email}`, // Địa chỉ email của người nhận
@@ -91,18 +90,39 @@ class OrderService {
     }
 
 
+    changeStatusOrderInUser = async (id, idUser) => {
+        let checkOrder = await this.orderRepository.findOneBy({idOrder: id})
+        let idUserInOrder = checkOrder.idUser
+
+        if (!checkOrder) {
+            return null
+        } else {
+            if (idUserInOrder != idUser) {
+                return false
+            } else {
+                if (checkOrder.statusOrder === 'Approved') {
+                    checkOrder.statusOrder = 'Done'
+                    await this.orderRepository.save(checkOrder)
+                }else {
+                    return false
+                }
+
+            }
+
+        }
+    }
 
 
-    getOrderInDay = async (id, startTime,endTime) => {
+    getOrderInDay = async (id, startTime, endTime) => {
         let sql = `select *
                    from orders o
                             join post p on o.idPost = p.idPost
                             join user u on p.idUser = u.idUser
-                           
+
                    where o.idPost = ${id}
-                     and  ('${startTime}' <= o.endTime and o.endTime <= '${endTime}')
+                       and ('${startTime}' <= o.endTime and o.endTime <= '${endTime}')
                       or ('${startTime}' <= o.startTime and o.startTime <= '${endTime}')
-                     `
+        `
         let orders = await this.orderRepository.query(sql);
         if (orders.length === 0) {
             return true
@@ -112,13 +132,12 @@ class OrderService {
     }
 
 
-
-
     subtractionDate = async (startTime, endTime) => {
-     let sql = `select DATEDIFF( '${endTime}','${startTime}' ) as date`
-        let time =  await this.orderRepository.query(sql)
+        let sql = `select DATEDIFF( '${endTime}','${startTime}' ) as date`
+        let time = await this.orderRepository.query(sql)
         return time[0].date
     }
 
 }
+
 export default new OrderService()

@@ -11,3 +11,4 @@ orderRouter.get('/getAllOrdersInSeller/:id',OrderController.getAllOrdersInSeller
 orderRouter.get('/getAllOrdersInUser/:id',OrderController.getAllOrdersInUser)
 orderRouter.post('/add',OrderController.addOrder)
 orderRouter.get('/changeStatusOrder/:id',OrderController.changeStatusOrder)
+orderRouter.get('/changeStatusOrderInUser/:id',OrderController.changeStatusOrderInUserController)
