@@ -9,7 +9,7 @@ declare class PostService {
     get12Post: () => Promise<any>;
     updatePost: (idPost: any, newPost: any) => Promise<any>;
     removePostService: (idPost: any) => Promise<any>;
-    checkUserPostService: (idUser: any, idPost: any) => Promise<boolean>;
+    checkUserPostService: (idUser: any) => Promise<any>;
     checkSeller: (idPost: any) => Promise<any>;
     findPrice: (idPost: any) => Promise<any>;
 }

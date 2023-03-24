@@ -79,6 +79,17 @@ class OrderController {
                 res.status(500).json(e.message);
             }
         };
+        this.changeStatusOrderInUserController = async (req, res) => {
+            try {
+                let idUser = req["decoded"].idUser;
+                let id = req.params.id;
+                let response = await this.oderService.changeStatusOrderInUser(id, idUser);
+                return res.status(200).json(response);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
         this.oderService = OrderService_1.default;
         this.postService = PostService_1.default;
     }

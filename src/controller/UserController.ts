@@ -29,7 +29,7 @@ class UserController {
 
     showSellerProfile = async (req: Request, res: Response) => {
         try {
-            let id = req.params
+            let id = req.params //idPost
 
             let response = await this.postServices.checkSeller(id.id);
             return res.status(200).json(response)

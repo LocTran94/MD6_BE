@@ -93,19 +93,15 @@ class PostService {
     }
 
 
-    checkUserPostService = async (idUser, idPost) => {
-        let sql = `select u.idUser
+    checkUserPostService = async ( idUser) => {
+        let sql = `select p.idPost
                    from user u
                             join post p on p.idUser = u.idUser
 
-                   where p.idPost = ${idPost}`;
-        let checkIdUser = await this.postRepository.query(sql);
+                   where p.idUser = ${idUser}`;
+        let checkIdPost = await this.postRepository.query(sql);
 
-
-        if (checkIdUser[0].idUser === idUser) {
-            return true;
-        }
-        return false;
+        return checkIdPost[0].idPost;
     }
 
 

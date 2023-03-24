@@ -13,4 +13,5 @@ exports.orderRouter.get('/getAllOrdersInSeller/:id', OrderController_1.default.g
 exports.orderRouter.get('/getAllOrdersInUser/:id', OrderController_1.default.getAllOrdersInUser);
 exports.orderRouter.post('/add', OrderController_1.default.addOrder);
 exports.orderRouter.get('/changeStatusOrder/:id', OrderController_1.default.changeStatusOrder);
+exports.orderRouter.get('/changeStatusOrderInUser/:id', OrderController_1.default.changeStatusOrderInUserController);
 //# sourceMappingURL=order-router.js.map

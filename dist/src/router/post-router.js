@@ -12,8 +12,7 @@ exports.postRouter.use(auth_1.auth);
 exports.postRouter.get('', PostController_1.default.getAllPosts);
 exports.postRouter.get('/getAllPost2', PostController_1.default.getAllPosts2);
 exports.postRouter.post('/add', PostController_1.default.createPost);
-exports.postRouter.delete('/remove/:idPost', PostController_1.default.removePost);
-exports.postRouter.put('/edit/:idPost', PostController_1.default.editPost);
+exports.postRouter.put('/edit/:idUser', PostController_1.default.editPost);
 exports.postRouter.get('/showPosts', PostController_1.default.getLimitPost);
 exports.postRouter.get('/findById/:id', PostController_1.default.findByIdPost);
 //# sourceMappingURL=post-router.js.map

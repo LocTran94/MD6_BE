@@ -91,16 +91,37 @@ class OrderService {
                 }
             }
         };
+        this.changeStatusOrderInUser = async (id, idUser) => {
+            let checkOrder = await this.orderRepository.findOneBy({ idOrder: id });
+            let idUserInOrder = checkOrder.idUser;
+            if (!checkOrder) {
+                return null;
+            }
+            else {
+                if (idUserInOrder != idUser) {
+                    return false;
+                }
+                else {
+                    if (checkOrder.statusOrder === 'Approved') {
+                        checkOrder.statusOrder = 'Done';
+                        await this.orderRepository.save(checkOrder);
+                    }
+                    else {
+                        return false;
+                    }
+                }
+            }
+        };
         this.getOrderInDay = async (id, startTime, endTime) => {
             let sql = `select *
                    from orders o
                             join post p on o.idPost = p.idPost
                             join user u on p.idUser = u.idUser
-                           
+
                    where o.idPost = ${id}
-                     and  ('${startTime}' <= o.endTime and o.endTime <= '${endTime}')
+                       and ('${startTime}' <= o.endTime and o.endTime <= '${endTime}')
                       or ('${startTime}' <= o.startTime and o.startTime <= '${endTime}')
-                     `;
+        `;
             let orders = await this.orderRepository.query(sql);
             if (orders.length === 0) {
                 return true;
