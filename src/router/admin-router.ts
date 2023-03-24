@@ -15,3 +15,4 @@ adminRouter.get('/changeCategory/:id',adminController.changeCategoryUser)
 adminRouter.get('/getAddVip',adminController.getAddVip)
 adminRouter.get('/changeSellerToVip/:id',adminController.changeSellerToVip)
 
+

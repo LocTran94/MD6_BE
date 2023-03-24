@@ -13,6 +13,27 @@ class OrderService {
         this.userRepository = AppDataSource.getRepository(User)
     }
 
+
+
+
+
+    getAllOrders = async () => {
+        let sql = `select *
+                   from orders o
+                            join post p on o.idPost = p.idPost
+                            join user u on p.idUser = u.idUser
+                    `
+        let orders = await this.orderRepository.query(sql)
+        if (!orders) {
+            return 'No orders found'
+        }
+        return orders;
+    }
+
+
+
+
+
     getAllOrdersInSellerService = async (id) => {
         let sql = `select *
                    from orders o
