@@ -11,13 +11,13 @@ class PostService {
     }
 
 
-    getPrice = async (id) => {
-        let sql = `select price
-                   from provision pr
-                   where pr.idProvision = ${id}`
-        let price = await this.provisionRepository.query(sql)
-        return price[0].price
-    }
+    // getPrice = async (id) => {
+    //     let sql = `select price
+    //                from provision pr
+    //                where pr.idProvision = ${id}`
+    //     let price = await this.provisionRepository.query(sql)
+    //     return price[0].price
+    // }
 
     getAllProvisionService = async () => {
         let sql = `select *

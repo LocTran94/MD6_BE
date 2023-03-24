@@ -48,6 +48,7 @@ class UserServices {
 
     getMyProfile = async (idUser) => {
 
+
         let users = await this.userRepository.findOneBy({idUser: idUser});
         return users;
     }

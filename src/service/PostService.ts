@@ -118,9 +118,6 @@ class PostService {
 
                    where p.idPost = ${idPost}`;
         let profile = await this.postRepository.query(sql);
-
-        // let users = await this.userRepository.findOneBy({idUser: idUser[0].idUser});
-
         return profile
     }
 
@@ -128,7 +125,6 @@ class PostService {
         let sql = `SELECT price from post p where p.idPost = ${idPost}`
         let price = await this.postRepository.query(sql)
         return price[0].price
-
     }
 
 

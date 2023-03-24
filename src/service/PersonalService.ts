@@ -14,18 +14,25 @@ class PersonalService {
 
 
     SavePersonalService = async (personalService, idPost,idUser) => {
-        let sql = `select u.role ,u.idUser
+
+        for (let i = 0; i < personalService.length; i++ ){
+            let sql = `select u.role ,u.idUser
                    from post p
                             join user u on p.idUser = u.idUser
                    where p.idPost = ${idPost}`
-        let result = await this.userRepository.query(sql)
-        if (result[0].role=== 'user'){
-            return false
-        }else {
-            if (result[0].idUser != idUser){
+            let result = await this.userRepository.query(sql)
+            if (result[0].role=== 'user'){
                 return false
+            }else {
+                if (result[0].idUser != idUser){
+                    return false
+                }
+                let personal = {
+                    idProvision: personalService[i],
+                    idPost: idPost
+                }
+            let a = await this.personalServiceRepository.save(personal);
             }
-            return this.personalServiceRepository.save(personalService);
         }
 
     }
