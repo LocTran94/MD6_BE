@@ -29,6 +29,18 @@ const nodemailer = __importStar(require("nodemailer"));
 const user_1 = require("../model/user");
 class OrderService {
     constructor() {
+        this.getAllOrders = async () => {
+            let sql = `select *
+                   from orders o
+                            join post p on o.idPost = p.idPost
+                            join user u on p.idUser = u.idUser
+                    `;
+            let orders = await this.orderRepository.query(sql);
+            if (!orders) {
+                return 'No orders found';
+            }
+            return orders;
+        };
         this.getAllOrdersInSellerService = async (id) => {
             let sql = `select *
                    from orders o

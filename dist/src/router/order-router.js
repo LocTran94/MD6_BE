@@ -11,6 +11,7 @@ exports.orderRouter = (0, express_1.Router)();
 exports.orderRouter.use(auth_1.auth);
 exports.orderRouter.get('/getAllOrdersInSeller/:id', OrderController_1.default.getAllOrdersInSeller);
 exports.orderRouter.get('/getAllOrdersInUser/:id', OrderController_1.default.getAllOrdersInUser);
+exports.orderRouter.get('/getAllOrders', OrderController_1.default.getAllOrdersInAdmin);
 exports.orderRouter.post('/add', OrderController_1.default.addOrder);
 exports.orderRouter.get('/changeStatusOrder/:id', OrderController_1.default.changeStatusOrder);
 exports.orderRouter.get('/changeStatusOrderInUser/:id', OrderController_1.default.changeStatusOrderInUserController);

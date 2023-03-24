@@ -17,6 +17,15 @@ class OrderController {
                 response.status(500).json(error.message);
             }
         };
+        this.getAllOrdersInAdmin = async (request, response) => {
+            try {
+                let orders = await this.oderService.getAllOrders();
+                response.status(200).json(orders);
+            }
+            catch (error) {
+                response.status(500).json(error.message);
+            }
+        };
         this.getAllOrdersInUser = async (request, response) => {
             try {
                 let idPost = request.params.id;

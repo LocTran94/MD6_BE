@@ -2,6 +2,7 @@ declare class OrderService {
     private orderRepository;
     private userRepository;
     constructor();
+    getAllOrders: () => Promise<any>;
     getAllOrdersInSellerService: (id: any) => Promise<any>;
     getAllOrdersInUserService: (id: any) => Promise<any>;
     saveOrder: (order: any) => Promise<any>;
