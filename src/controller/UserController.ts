@@ -18,7 +18,6 @@ class UserController {
     showMyProfile = async (req: Request, res: Response) => {
         try {
             let id = req.params
-
             let response = await this.userServices.getMyProfile(id.id);
             return res.status(200).json(response)
         } catch (e) {
@@ -30,7 +29,6 @@ class UserController {
     showSellerProfile = async (req: Request, res: Response) => {
         try {
             let id = req.params //idPost
-
             let response = await this.postServices.checkSeller(id.id);
             return res.status(200).json(response)
         } catch (e) {
@@ -62,7 +60,6 @@ class UserController {
 
         try {
             let user = await this.userServices.registerService(req.body);
-
             return res.status(201).json(user)
         } catch (e) {
             res.status(500).json(e.message)
@@ -71,15 +68,9 @@ class UserController {
 
 
     login = async (req: Request, res: Response) => {
-
-
-
         try {
             let response = await this.userServices.checkUserService(req.body)
-
             return res.status(200).json(response)
-
-
         } catch (e) {
             res.status(500).json(e.message)
         }

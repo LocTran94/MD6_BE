@@ -54,14 +54,6 @@ class PostService {
             await this.postRepository.update({ idPost: idPost }, newPost);
             return newPost.idUser;
         };
-        this.removePostService = async (idPost) => {
-            let posts = await this.postRepository.findOneBy({ idPost: idPost });
-            if (!posts) {
-                return null;
-            }
-            await this.postRepository.delete({ idPost: idPost });
-            return posts.idUser;
-        };
         this.checkUserPostService = async (idUser) => {
             let sql = `select p.idPost
                    from user u

@@ -83,14 +83,14 @@ class PostService {
     }
 
 
-    removePostService = async (idPost) => {
-        let posts = await this.postRepository.findOneBy({idPost: idPost});
-        if (!posts) {
-            return null
-        }
-        await this.postRepository.delete({idPost: idPost});
-        return posts.idUser;
-    }
+    // removePostService = async (idPost) => {
+    //     let posts = await this.postRepository.findOneBy({idPost: idPost});
+    //     if (!posts) {
+    //         return null
+    //     }
+    //     await this.postRepository.delete({idPost: idPost});
+    //     return posts.idUser;
+    // }
 
 
     checkUserPostService = async ( idUser) => {
@@ -114,6 +114,7 @@ class PostService {
 
                    where p.idPost = ${idPost}`;
         let profile = await this.postRepository.query(sql);
+
         return profile
     }
 
