@@ -23,7 +23,7 @@ __decorate([
 ], Personal.prototype, "idPost", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Personal.prototype, "idProvision", void 0);
 Personal = __decorate([
     (0, typeorm_1.Entity)()

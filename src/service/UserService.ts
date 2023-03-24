@@ -58,6 +58,13 @@ class UserServices {
 
 
 
+    getAllVipService = async () => {
+        let sql = `select *
+                   from user
+                   where role = 'Vip'`
+        let users = await this.userRepository.query(sql);
+        return users;
+    }
 
 
 
@@ -120,7 +127,7 @@ class UserServices {
                         role: userCheck.role
                     }
                     const token = jwt.sign(payload, SECRET, {
-                        expiresIn: 360000000
+                        expiresIn: 36000000
                     });
                     let userRes = {
                         idUser: userCheck.idUser,

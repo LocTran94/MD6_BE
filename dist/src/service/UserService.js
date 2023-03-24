@@ -65,6 +65,13 @@ class UserServices {
             let users = await this.userRepository.query(sql);
             return users;
         };
+        this.getAllVipService = async () => {
+            let sql = `select *
+                   from user
+                   where role = 'Vip'`;
+            let users = await this.userRepository.query(sql);
+            return users;
+        };
         this.getMyProfile = async (idUser) => {
             let users = await this.userRepository.findOneBy({ idUser: idUser });
             return users;
@@ -123,7 +130,7 @@ class UserServices {
                             role: userCheck.role
                         };
                         const token = jsonwebtoken_1.default.sign(payload, auth_1.SECRET, {
-                            expiresIn: 360000000
+                            expiresIn: 36000000
                         });
                         let userRes = {
                             idUser: userCheck.idUser,

@@ -29,8 +29,6 @@ class PostController {
                 }
                 res.status(200).json({
                     posts: posts,
-                    currentPage: page,
-                    totalPage: totalPage
                 });
             }
             catch (e) {
@@ -59,8 +57,6 @@ class PostController {
                 }
                 res.status(200).json({
                     posts: posts,
-                    currentPage: page,
-                    totalPage: totalPage
                 });
             }
             catch (e) {
@@ -80,12 +76,8 @@ class PostController {
         this.editPost = async (req, res) => {
             try {
                 let idUser = req.params.idUser;
-                console.log(111111111, idUser);
                 let idUserTocken = req["decoded"].idUser;
-                console.log(2222222222, idUserTocken);
                 let idPost = await this.postService.checkUserPostService(idUser);
-                console.log(3333333333, idPost);
-                console.log(444444444, req["decoded"].role);
                 if ((idUser == idUserTocken) && (req["decoded"].role === 'seller')) {
                     let post = await this.postService.updatePost(idPost, req.body);
                     res.status(200).json(post);

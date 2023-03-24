@@ -17,6 +17,15 @@ class UserController {
                 res.status(500).json(e.message);
             }
         };
+        this.showVip = async (req, res) => {
+            try {
+                let response = await this.userServices.getAllVipService();
+                return res.status(200).json(response);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
         this.showSellerProfile = async (req, res) => {
             try {
                 let id = req.params;
@@ -84,15 +93,11 @@ class UserController {
             }
         };
         this.checkAddVip = async (req, res) => {
-            try {
-                let idUser = req["decoded"].idUser;
-                let id = req.params.id;
-                let response = await this.userServices.changeAddVip(id, idUser);
-                return res.status(200).json(response);
-            }
-            catch (e) {
-                res.status(500).json(e.message);
-            }
+            console.log(2222222222, req["decoded"].idUser);
+            let idUser = req["decoded"].idUser;
+            let id = req.params.id;
+            let response = await this.userServices.changeAddVip(id, idUser);
+            return res.status(200).json(response);
         };
         this.findByName = async (req, res) => {
             try {

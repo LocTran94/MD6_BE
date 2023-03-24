@@ -5,6 +5,7 @@ declare class UserServices {
     getUserRequest: () => Promise<any>;
     getWaitUser: () => Promise<any>;
     getAddVipService: () => Promise<any>;
+    getAllVipService: () => Promise<any>;
     getMyProfile: (idUser: any) => Promise<any>;
     checkOldPassword: (idUser: any, password: any) => Promise<boolean | "User not found">;
     changePasswordService: (idUser: any, password: any) => Promise<any>;

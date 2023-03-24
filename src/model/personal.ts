@@ -7,5 +7,5 @@ export class Personal {
     @Column()
     idPost:  number;
     @Column()
-    idProvision:  number;
+    idProvision:  string;
 }

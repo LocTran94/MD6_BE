@@ -4,6 +4,7 @@ declare class UserController {
     private postServices;
     constructor();
     showMyProfile: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    showVip: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     showSellerProfile: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     changePassword: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     register: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
