@@ -26,7 +26,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "text" }),
+    (0, typeorm_1.Column)({ default: "https://cdn-icons-png.flaticon.com/512/25/25634.png" }),
     __metadata("design:type", String)
 ], User.prototype, "avatar", void 0);
 __decorate([

@@ -131,15 +131,15 @@ class PostController {
     }
   };
 
-findByIdUser = async (req: Request, res: Response) => {
-  try {
-    let idUser = req.params.id;
-    let post = await postService.findPostByIdUser(idUser);
-    res.status(200).json(post);
-  } catch (e) {
-    res.status(500).json(e.message);
-  }
-};
+  findByIdUser = async (req: Request, res: Response) => {
+    try {
+      let idUser = req.params.id;
+      let post = await postService.findPostByIdUser(idUser);
+      res.status(200).json(post);
+    } catch (e) {
+      res.status(500).json(e.message);
+    }
+  };
 }
 
 export default new PostController();
