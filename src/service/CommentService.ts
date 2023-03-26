@@ -15,7 +15,7 @@ class CommentService {
 
     getAllCommentsService = async () => {
         let sql = `select *
-                   from comment  `;
+                   from comment join user on comment.idUser = user.idUser  `;
         let comments = await this.commentRepository.query(sql);
         if (!comments) {
             return 'No comments found'
