@@ -26,7 +26,6 @@ class UserController {
     }
 
 
-
     showVip = async (req: Request, res: Response) => {
         try {
             let response = await this.userServices.getAllVipService()
@@ -66,9 +65,8 @@ class UserController {
         }
     }
 
+
     register = async (req: Request, res: Response) => {
-
-
         try {
             let user = await this.userServices.registerService(req.body);
             return res.status(201).json(user)
@@ -112,33 +110,16 @@ class UserController {
     }
 
 
-
-
     checkAddVip = async (req, res) => {
-        console.log(2222222222,req["decoded"].idUser)
-        let idUser = req["decoded"].idUser
-        let id = req.params.id
-        let response = await this.userServices.changeAddVip(id,idUser)
-        return res.status(200).json(response)
-
-
-        // try {
-        //     let idUser = req["decoded"].idUser
-        //     console.log(111111111,idUser,req.params.id)
-        //     let id = req.params.id
-        //     let response = await this.userServices.changeAddVip(id,idUser)
-        //     return res.status(200).json(response)
-        //
-        // } catch (e) {
-        //     res.status(500).json(e.message)
-        // }
+        try {
+            let idUser = req["decoded"].idUser
+            let id = req.params.id
+            let response = await this.userServices.changeAddVip(id, idUser)
+            return res.status(200).json(response)
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
     }
-
-
-
-
-
-
 
 
     findByName = async (req, res) => {

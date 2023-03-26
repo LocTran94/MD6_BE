@@ -8,6 +8,7 @@ const router_1 = require("./src/router/router");
 const body_parser_1 = __importDefault(require("body-parser"));
 const data_source_1 = require("./src/data-source");
 const cors_1 = __importDefault(require("cors"));
+const http = require('http');
 const app = (0, express_1.default)();
 data_source_1.AppDataSource.initialize().then(() => {
     console.log('database connected');

@@ -96,10 +96,8 @@ class UserServices {
             if (!user) {
                 return "User not found";
             }
-            else {
-                user.password = await bcrypt_1.default.hash(password, 10);
-                return this.userRepository.update({ idUser: idUser }, user);
-            }
+            user.password = await bcrypt_1.default.hash(password, 10);
+            return this.userRepository.update({ idUser: idUser }, user);
         };
         this.registerService = async (user) => {
             let userCheck = await this.userRepository.findOneBy({ username: user.username });
@@ -202,6 +200,28 @@ class UserServices {
                 }
             }
         };
+        this.sendMailService = async (email) => {
+            let transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                    user: 'tranhoangloc502@gmail.com',
+                    pass: 'enlixpabkfmylwhr',
+                },
+            });
+            await transporter.sendMail({
+                from: 'tranhoangloc502@gmail.com',
+                to: `${email}`,
+                subject: 'Đăng ký thành công',
+                text: 'Chúc mừng! Bạn đã đăng ký thành công.',
+            }, (error, info) => {
+                if (error) {
+                    console.log(error);
+                }
+                else {
+                    console.log('Email sent: ' + 'lalalalala');
+                }
+            });
+        };
         this.changeCategory = async (id) => {
             let checkUser = await this.userRepository.findOneBy({ idUser: id });
             if (!checkUser) {
@@ -212,26 +232,7 @@ class UserServices {
                     checkUser.category = 'Add';
                     await this.userRepository.save(checkUser);
                     let email = checkUser.gmail;
-                    let transporter = nodemailer.createTransport({
-                        service: "gmail",
-                        auth: {
-                            user: 'tranhoangloc502@gmail.com',
-                            pass: 'enlixpabkfmylwhr',
-                        },
-                    });
-                    await transporter.sendMail({
-                        from: 'tranhoangloc502@gmail.com',
-                        to: `${email}`,
-                        subject: 'Đăng ký thành công',
-                        text: 'Chúc mừng! Bạn đã đăng ký thành công.',
-                    }, (error, info) => {
-                        if (error) {
-                            console.log(error);
-                        }
-                        else {
-                            console.log('Email sent: ' + 'lalalalala');
-                        }
-                    });
+                    await this.sendMailService(email);
                 }
             }
         };
@@ -330,7 +331,7 @@ class UserServices {
         this.findByGmailService = async (idUser) => {
             let sql = `SELECT u.gmail
                    FROM user u
-                   where  u.idUser = ${idUser}`;
+                   where u.idUser = ${idUser}`;
             let gmail = await this.userRepository.query(sql);
             return gmail;
         };

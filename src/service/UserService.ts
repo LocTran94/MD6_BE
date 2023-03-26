@@ -46,8 +46,6 @@ class UserServices {
     }
 
 
-
-
     getAddVipService = async () => {
         let sql = `select *
                    from user
@@ -57,7 +55,6 @@ class UserServices {
     }
 
 
-
     getAllVipService = async () => {
         let sql = `select *
                    from user
@@ -65,7 +62,6 @@ class UserServices {
         let users = await this.userRepository.query(sql);
         return users;
     }
-
 
 
     getMyProfile = async (idUser) => {
@@ -94,10 +90,9 @@ class UserServices {
         let user = await this.userRepository.findOneBy({idUser: idUser});
         if (!user) {
             return "User not found";
-        } else {
-            user.password = await bcrypt.hash(password, 10);
-            return this.userRepository.update({idUser: idUser}, user);
         }
+        user.password = await bcrypt.hash(password, 10);
+        return this.userRepository.update({idUser: idUser}, user);
     }
 
     registerService = async (user) => {
@@ -187,9 +182,7 @@ class UserServices {
     }
 
 
-
-
-    changeAddVip = async (id,idUser) => {
+    changeAddVip = async (id, idUser) => {
         let checkSeller = await this.userRepository.findOneBy({idUser: id})
 
         if (!checkSeller) {
@@ -197,8 +190,7 @@ class UserServices {
         } else {
             if (checkSeller.role != 'seller' && id === idUser) {
                 return false
-            }
-            else{
+            } else {
                 if (checkSeller.addVip === 'No') {
                     checkSeller.addVip = 'Yes'
                     await this.userRepository.save(checkSeller)
@@ -210,10 +202,32 @@ class UserServices {
     }
 
 
+    sendMailService = async (email) => {
 
+        let transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: 'tranhoangloc502@gmail.com',
+                pass: 'enlixpabkfmylwhr',
 
+            },
+        });
 
+        await transporter.sendMail({
+                from: 'tranhoangloc502@gmail.com',
+                to: `${email}`,
+                subject: 'Đăng ký thành công',
+                text: 'Chúc mừng! Bạn đã đăng ký thành công.',
+            },
+            (error, info) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + 'lalalalala');
+                }
+            });
 
+    }
 
 
     changeCategory = async (id) => {
@@ -226,30 +240,7 @@ class UserServices {
                 await this.userRepository.save(checkUser)
 
                 let email = checkUser.gmail
-                let transporter = nodemailer.createTransport({
-                    service: "gmail",
-                    auth: {
-                        user: 'tranhoangloc502@gmail.com', // Địa chỉ email của bạn
-                        pass: 'enlixpabkfmylwhr', // Mật khẩu của bạn
-
-                    },
-                });
-
-
-// // Gửi email
-                await transporter.sendMail({
-                        from: 'tranhoangloc502@gmail.com', // Địa chỉ email của bạn
-                        to: `${email}`, // Địa chỉ email của người nhận
-                        subject: 'Đăng ký thành công',
-                        text: 'Chúc mừng! Bạn đã đăng ký thành công.',
-                    },
-                    (error, info) => {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.log('Email sent: ' + 'lalalalala');
-                        }
-                    });
+                await this.sendMailService(email)
 
 
             }
@@ -311,16 +302,16 @@ class UserServices {
 
     }
 
-    changeSeller = async (id)=>{
+    changeSeller = async (id) => {
         let checkUser = await this.userRepository.findOneBy({idUser: id})
         if (!checkUser) {
             return null
-        }else {
-            if (checkUser.role == 'seller'){
+        } else {
+            if (checkUser.role == 'seller') {
                 checkUser.role = 'Vip'
                 await this.userRepository.save(checkUser)
                 return "Bạn đã duyệt thành công"
-            }else {
+            } else {
                 return false
             }
         }
@@ -364,10 +355,10 @@ class UserServices {
     }
 
 
-    findByGmailService = async (idUser)=>{
+    findByGmailService = async (idUser) => {
         let sql = `SELECT u.gmail
                    FROM user u
-                   where  u.idUser = ${idUser}`
+                   where u.idUser = ${idUser}`
         let gmail = await this.userRepository.query(sql)
         return gmail;
 

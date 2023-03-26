@@ -26,6 +26,7 @@ declare class UserServices {
     offlineService: (id: any) => Promise<any>;
     changeStatus: (id: any) => Promise<string>;
     changeAddVip: (id: any, idUser: any) => Promise<boolean>;
+    sendMailService: (email: any) => Promise<void>;
     changeCategory: (id: any) => Promise<any>;
     removeUserService: (id: any) => Promise<any>;
     userRequest: (id: any) => Promise<string>;

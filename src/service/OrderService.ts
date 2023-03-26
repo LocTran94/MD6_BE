@@ -14,24 +14,18 @@ class OrderService {
     }
 
 
-
-
-
     getAllOrders = async () => {
         let sql = `select *
                    from orders o
                             join post p on o.idPost = p.idPost
                             join user u on p.idUser = u.idUser
-                    `
+        `
         let orders = await this.orderRepository.query(sql)
         if (!orders) {
             return 'No orders found'
         }
         return orders;
     }
-
-
-
 
 
     getAllOrdersInSellerService = async (id) => {
@@ -80,31 +74,9 @@ class OrderService {
             if (checkOrder.statusOrder === 'Wait') {
                 checkOrder.statusOrder = 'Approved'
                 await this.orderRepository.save(checkOrder)
+                await this.orderRepository.sendMailService(email)
 
 
-                let transporter = nodemailer.createTransport({
-                    service: "gmail",
-                    auth: {
-                        user: 'tranhoangloc502@gmail.com', // Địa chỉ email của bạn
-                        pass: 'enlixpabkfmylwhr', // Mật khẩu của bạn
-
-                    },
-                });
-
-
-                await transporter.sendMail({
-                        from: 'tranhoangloc502@gmail.com', // Địa chỉ email của bạn
-                        to: `${email}`, // Địa chỉ email của người nhận
-                        subject: 'Mua thành công',
-                        text: 'Đơn hàng của bạn đã được nhận',
-                    },
-                    (error, info) => {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.log('Email sent: ' + 'lalalalala');
-                        }
-                    });
             }
         }
 
@@ -124,7 +96,7 @@ class OrderService {
                 if (checkOrder.statusOrder === 'Approved') {
                     checkOrder.statusOrder = 'Done'
                     await this.orderRepository.save(checkOrder)
-                }else {
+                } else {
                     return false
                 }
 
