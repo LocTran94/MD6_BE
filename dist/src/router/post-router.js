@@ -15,4 +15,5 @@ exports.postRouter.post('/add', PostController_1.default.createPost);
 exports.postRouter.put('/edit/:idUser', PostController_1.default.editPost);
 exports.postRouter.get('/showPosts', PostController_1.default.getLimitPost);
 exports.postRouter.get('/findById/:id', PostController_1.default.findByIdPost);
+exports.postRouter.get('/findPostByIdUser/:id', PostController_1.default.findByIdUser);
 //# sourceMappingURL=post-router.js.map

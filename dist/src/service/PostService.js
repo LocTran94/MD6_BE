@@ -30,6 +30,14 @@ class PostService {
             let post = await this.postRepository.query(sql);
             return post;
         };
+        this.findPostByIdUser = async (id) => {
+            let sql = `select *
+                   from user u
+                            join post p on u.idUser = p.idUser
+                   where p.idUser = ${id}`;
+            let post = await this.postRepository.query(sql);
+            return post;
+        };
         this.saveService = async (post, id) => {
             let sql = `select user.role from user where idUser = ${id}`;
             let result = await this.userRepository.query(sql);

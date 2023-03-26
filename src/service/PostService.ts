@@ -44,6 +44,14 @@ class PostService {
         let post = await this.postRepository.query(sql)
         return post;
     }
+    findPostByIdUser = async (id) => {
+        let sql = `select *
+                   from user u
+                            join post p on u.idUser = p.idUser
+                   where p.idUser = ${id}`;
+        let post = await this.postRepository.query(sql)
+        return post;
+    }
 
 
     saveService = async (post,id) => {
