@@ -1,7 +1,7 @@
 export declare class Orders {
     idOrder: number;
     idUser: number;
-    idPost: number;
+    idPost: string;
     endTime: string;
     startTime: string;
     statusOrder: string;

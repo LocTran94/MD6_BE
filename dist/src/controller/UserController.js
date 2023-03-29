@@ -93,7 +93,6 @@ class UserController {
             }
         };
         this.checkAddVip = async (req, res) => {
-            console.log(2222222222, req["decoded"].idUser);
             let idUser = req["decoded"].idUser;
             let id = req.params.id;
             let response = await this.userServices.changeAddVip(id, idUser);

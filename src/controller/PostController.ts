@@ -12,7 +12,7 @@ class PostController {
 
   getAllPosts = async (req: Request, res: Response) => {
     try {
-      let limit = 8;
+      let limit = 20;
       let offset = 0;
       let page = 1;
       if (req.query.page) {
@@ -40,7 +40,7 @@ class PostController {
 
   getAllPosts2 = async (req: Request, res: Response) => {
     try {
-      let limit = 6;
+      let limit = 12;
       let offset = 0;
       let page = 1;
       if (req.query.page) {

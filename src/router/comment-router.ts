@@ -5,7 +5,6 @@ import CommentController from "../controller/CommentController";
 export const commentRouter = Router();
 commentRouter.use(auth);
 commentRouter.get("", CommentController.getAllComments);
-
 commentRouter.post("/add", CommentController.createComment);
 commentRouter.put("/editComment/:idComment", CommentController.editComment);
 commentRouter.delete(

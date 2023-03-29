@@ -37,7 +37,7 @@ class OrderService {
                     `;
             let orders = await this.orderRepository.query(sql);
             if (!orders) {
-                return 'No orders found';
+                return "No orders found";
             }
             return orders;
         };
@@ -46,10 +46,10 @@ class OrderService {
                    from orders o
                             join post p on o.idPost = p.idPost
                             join user u on p.idUser = u.idUser
-                   where o.idPost = ${id} `;
+                   where p.idUser = ${id} `;
             let orders = await this.orderRepository.query(sql);
             if (!orders) {
-                return 'No orders found';
+                return "No orders found";
             }
             return orders;
         };
@@ -61,11 +61,12 @@ class OrderService {
                    where o.idUser = ${id}`;
             let orders = await this.orderRepository.query(sql);
             if (!orders) {
-                return 'No orders found';
+                return "No orders found";
             }
             return orders;
         };
         this.saveOrder = async (order) => {
+            console.log(1111111111111111111, order);
             return await this.orderRepository.save(order);
         };
         this.changeStatusOrderService = async (id) => {
@@ -77,27 +78,27 @@ class OrderService {
                 return null;
             }
             else {
-                if (checkOrder.statusOrder === 'Wait') {
-                    checkOrder.statusOrder = 'Approved';
+                if (checkOrder.statusOrder === "Wait") {
+                    checkOrder.statusOrder = "Approved";
                     await this.orderRepository.save(checkOrder);
                     let transporter = nodemailer.createTransport({
                         service: "gmail",
                         auth: {
-                            user: 'tranhoangloc502@gmail.com',
-                            pass: 'enlixpabkfmylwhr',
+                            user: "tranhoangloc502@gmail.com",
+                            pass: "enlixpabkfmylwhr",
                         },
                     });
                     await transporter.sendMail({
-                        from: 'tranhoangloc502@gmail.com',
+                        from: "tranhoangloc502@gmail.com",
                         to: `${email}`,
-                        subject: 'Mua thành công',
-                        text: 'Đơn hàng của bạn đã được nhận',
+                        subject: "Mua thành công",
+                        text: "Đơn hàng của bạn đã được nhận",
                     }, (error, info) => {
                         if (error) {
                             console.log(error);
                         }
                         else {
-                            console.log('Email sent: ' + 'lalalalala');
+                            console.log("Email sent: " + "lalalalala");
                         }
                     });
                 }
@@ -114,8 +115,8 @@ class OrderService {
                     return false;
                 }
                 else {
-                    if (checkOrder.statusOrder === 'Approved') {
-                        checkOrder.statusOrder = 'Done';
+                    if (checkOrder.statusOrder === "Approved") {
+                        checkOrder.statusOrder = "Done";
                         await this.orderRepository.save(checkOrder);
                     }
                     else {

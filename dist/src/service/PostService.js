@@ -16,7 +16,6 @@ class PostService {
                             join user u on p.idUser = u.idUser
                    where NOT u.status = 'off' limit ${limit} offset ${offset}`;
             let posts = await this.postRepository.query(sql);
-            console.log(posts);
             if (!posts) {
                 return 'No posts found';
             }

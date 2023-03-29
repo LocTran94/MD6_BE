@@ -9,7 +9,7 @@ class PostController {
     constructor() {
         this.getAllPosts = async (req, res) => {
             try {
-                let limit = 8;
+                let limit = 20;
                 let offset = 0;
                 let page = 1;
                 if (req.query.page) {
@@ -35,7 +35,7 @@ class PostController {
         };
         this.getAllPosts2 = async (req, res) => {
             try {
-                let limit = 6;
+                let limit = 12;
                 let offset = 0;
                 let page = 1;
                 if (req.query.page) {
