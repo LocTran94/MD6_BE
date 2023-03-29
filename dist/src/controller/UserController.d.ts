@@ -2,10 +2,12 @@ import { Request, Response } from "express";
 declare class UserController {
     private userServices;
     private postServices;
+    private personalServices;
     constructor();
     showMyProfile: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     showVip: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     showSellerProfile: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
+    showProvision: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     changePassword: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     register: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
     login: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;

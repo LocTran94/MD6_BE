@@ -68,7 +68,6 @@ class OrderController {
           response.status(200).json("Bạn chưa thể thuê dịch vụ");
         } else {
           if (y > order.dateOfOrder) {
-            console.log(77777777777);
 
             order.total = (time * 24 + (x.getHours() - y.getHours())) * price;
             order = await this.oderService.saveOrder(order);

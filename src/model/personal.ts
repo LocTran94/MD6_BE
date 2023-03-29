@@ -5,7 +5,7 @@ export class Personal {
     @PrimaryGeneratedColumn()
     idPersonalService: number;
     @Column()
-    idPost:  number;
+    idUser:  number;
     @Column()
     idProvision:  string;
 }

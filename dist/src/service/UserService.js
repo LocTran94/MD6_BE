@@ -63,7 +63,7 @@ class UserServices {
             let sql = `select *
                    from user u
                    where addVip = 'Yes'
-                   and NOT u.role = 'Vip'`;
+                     and NOT u.role = 'Vip'`;
             let users = await this.userRepository.query(sql);
             return users;
         };
@@ -334,7 +334,7 @@ class UserServices {
         this.findByGmailService = async (idUser) => {
             let sql = `SELECT u.gmail
                    FROM user u
-                   where  u.idUser = ${idUser}`;
+                   where u.idUser = ${idUser}`;
             let gmail = await this.userRepository.query(sql);
             return gmail;
         };

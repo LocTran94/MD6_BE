@@ -4,38 +4,44 @@ import {User} from "../model/user";
 
 
 class PersonalService {
-    private personalServiceRepository
+    private personalRepository
     private userRepository
 
     constructor() {
-        this.personalServiceRepository = AppDataSource.getRepository(Personal);
+        this.personalRepository = AppDataSource.getRepository(Personal);
         this.userRepository = AppDataSource.getRepository(User);
     }
 
 
-    SavePersonalService = async (personalService, idPost,idUser) => {
+    SavePersonalService = async (personalService,idUser) => {
 
         for (let i = 0; i < personalService.length; i++ ){
             let sql = `select u.role ,u.idUser
-                   from post p
-                            join user u on p.idUser = u.idUser
-                   where p.idPost = ${idPost}`
+                   from user u where u.idUser = ${idUser}`
             let result = await this.userRepository.query(sql)
             if (result[0].role=== 'user'){
                 return false
             }else {
-                if (result[0].idUser != idUser){
-                    return false
-                }
+
                 let personal = {
                     idProvision: personalService[i],
-                    idPost: idPost
+                    idUser: result[0].idUser
                 }
-            let a = await this.personalServiceRepository.save(personal);
+            let a = await this.personalRepository.save(personal);
             }
         }
 
     }
+
+
+    FindNameProvision = async (id)=>{
+        let sql = `select provisionName from provision p join personal pe on p.idProvision = pe.idProvision
+                     where pe.idUser = ${id}`
+        let result = await this.personalRepository.query(sql)
+        return result
+    }
+
+
 
 
 }

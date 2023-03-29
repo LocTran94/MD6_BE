@@ -53,8 +53,6 @@ class OrderService {
   };
 
   saveOrder = async (order) => {
-    console.log(1111111111111111111, order);
-
     return await this.orderRepository.save(order);
   };
 

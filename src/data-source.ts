@@ -6,6 +6,7 @@ import {Provision} from "./model/provision";
 import {Orders} from "./model/order";
 import {Personal} from "./model/personal";
 import {Comment} from "./model/comment";
+import { Message } from "./model/message";
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -16,6 +17,6 @@ export const AppDataSource = new DataSource({
     database: "love",
     synchronize: true,
     logging: false,
-    entities: [User,Post,Provision,Orders,Personal,Comment]
+    entities: [User,Post,Provision,Orders,Personal,Comment,Message]
 
 })

@@ -1,5 +1,5 @@
 export declare class Personal {
     idPersonalService: number;
-    idPost: number;
+    idUser: number;
     idProvision: string;
 }

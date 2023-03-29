@@ -1,14 +1,17 @@
 import { Request, Response } from "express";
 import UserService from "../service/UserService";
 import PostService from "../service/PostService";
+import PersonalService from "../service/PersonalService";
 
 class UserController {
   private userServices;
   private postServices;
+  private personalServices;
 
   constructor() {
     this.userServices = UserService;
     this.postServices = PostService;
+    this.personalServices = PersonalService;
   }
 
   showMyProfile = async (req: Request, res: Response) => {
@@ -39,6 +42,16 @@ class UserController {
       res.status(500).json(e.message);
     }
   };
+
+  showProvision = async (req: Request, res: Response)=> {
+    try {
+      let id = req.params.id; //idUser
+      let response = await this.personalServices.FindNameProvision(id)
+      return res.status(200).json(response);
+    } catch (e) {
+      res.status(500).json(e.message);
+    }
+  }
 
   changePassword = async (req: Request, res: Response) => {
     try {
@@ -72,6 +85,7 @@ class UserController {
   };
 
   login = async (req: Request, res: Response) => {
+
     try {
       let response = await this.userServices.checkUserService(req.body);
       return res.status(200).json(response);
@@ -108,7 +122,7 @@ class UserController {
 
     // try {
     //     let idUser = req["decoded"].idUser
-    //     console.log(111111111,idUser,req.params.id)
+    //
     //     let id = req.params.id
     //     let response = await this.userServices.changeAddVip(id,idUser)
     //     return res.status(200).json(response)

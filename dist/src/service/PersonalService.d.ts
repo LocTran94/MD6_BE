@@ -1,8 +1,9 @@
 declare class PersonalService {
-    private personalServiceRepository;
+    private personalRepository;
     private userRepository;
     constructor();
-    SavePersonalService: (personalService: any, idPost: any, idUser: any) => Promise<boolean>;
+    SavePersonalService: (personalService: any, idUser: any) => Promise<boolean>;
+    FindNameProvision: (id: any) => Promise<any>;
 }
 declare const _default: PersonalService;
 export default _default;

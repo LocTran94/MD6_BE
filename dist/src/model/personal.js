@@ -20,7 +20,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], Personal.prototype, "idPost", void 0);
+], Personal.prototype, "idUser", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
