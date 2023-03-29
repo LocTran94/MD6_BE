@@ -6,10 +6,10 @@ class CommentService {
     constructor() {
         this.getAllCommentsService = async () => {
             let sql = `select *
-                   from comment  `;
+                   from comment join user on comment.idUser = user.idUser `;
             let comments = await this.commentRepository.query(sql);
             if (!comments) {
-                return 'No comments found';
+                return "No comments found";
             }
             return comments;
         };
@@ -18,7 +18,9 @@ class CommentService {
             return "success";
         };
         this.updateCommentService = async (idComment, newComment) => {
-            let comment = await this.commentRepository.findOneBy({ idComment: idComment });
+            let comment = await this.commentRepository.findOneBy({
+                idComment: idComment,
+            });
             if (!comment) {
                 return null;
             }
@@ -26,7 +28,9 @@ class CommentService {
             return newComment;
         };
         this.removeCommentService = async (idComment) => {
-            let comments = await this.commentRepository.findOneBy({ idComment: idComment });
+            let comments = await this.commentRepository.findOneBy({
+                idComment: idComment,
+            });
             if (!comments) {
                 return null;
             }
@@ -37,7 +41,7 @@ class CommentService {
             let sql = `select comment.idUser from comment where comment.idComment = ${idComment}`;
             let idUser = await this.commentRepository.query(sql);
             if (!idUser) {
-                return 'Can not findComment';
+                return "Can not findComment";
             }
             return idUser[0].idUser;
         };

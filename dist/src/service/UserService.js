@@ -47,7 +47,8 @@ class UserServices {
                    from user u
                    where u.ask = 'Yes'
                      and NOT u.role = 'admin'
-                     and NOT u.role = 'seller'`;
+                     and NOT u.role = 'seller'
+                     and NOT u.role = 'Vip'`;
             let users = await this.userRepository.query(sql);
             return users;
         };
@@ -60,8 +61,9 @@ class UserServices {
         };
         this.getAddVipService = async () => {
             let sql = `select *
-                   from user
-                   where addVip = 'Yes'`;
+                   from user u
+                   where addVip = 'Yes'
+                   and NOT u.role = 'Vip'`;
             let users = await this.userRepository.query(sql);
             return users;
         };
@@ -96,11 +98,15 @@ class UserServices {
             if (!user) {
                 return "User not found";
             }
-            user.password = await bcrypt_1.default.hash(password, 10);
-            return this.userRepository.update({ idUser: idUser }, user);
+            else {
+                user.password = await bcrypt_1.default.hash(password, 10);
+                return this.userRepository.update({ idUser: idUser }, user);
+            }
         };
         this.registerService = async (user) => {
-            let userCheck = await this.userRepository.findOneBy({ username: user.username });
+            let userCheck = await this.userRepository.findOneBy({
+                username: user.username,
+            });
             if (userCheck) {
                 return "Username already registered";
             }
@@ -113,7 +119,7 @@ class UserServices {
                 return "User not found";
             }
             else {
-                if (userCheck.status === 'lock' || userCheck.category === 'Wait') {
+                if (userCheck.status === "lock" || userCheck.category === "Wait") {
                     return "your account has been locked";
                 }
                 else {
@@ -125,10 +131,10 @@ class UserServices {
                         let payload = {
                             idUser: userCheck.idUser,
                             username: userCheck.username,
-                            role: userCheck.role
+                            role: userCheck.role,
                         };
                         const token = jsonwebtoken_1.default.sign(payload, auth_1.SECRET, {
-                            expiresIn: 36000000
+                            expiresIn: 36000000,
                         });
                         let userRes = {
                             idUser: userCheck.idUser,
@@ -141,7 +147,7 @@ class UserServices {
                             gender: userCheck.gender,
                             ask: userCheck.ask,
                             category: userCheck.category,
-                            status: userCheck.status
+                            status: userCheck.status,
                         };
                         return userRes;
                     }
@@ -154,12 +160,12 @@ class UserServices {
                 return null;
             }
             else {
-                if (checkUser.status === 'active') {
-                    checkUser.status = 'off';
+                if (checkUser.status === "active") {
+                    checkUser.status = "off";
                     await this.userRepository.save(checkUser);
                 }
                 else {
-                    checkUser.status = 'active';
+                    checkUser.status = "active";
                     await this.userRepository.save(checkUser);
                 }
             }
@@ -170,16 +176,16 @@ class UserServices {
                 return null;
             }
             else {
-                if (checkUser.status === 'active') {
-                    checkUser.status = 'lock';
+                if (checkUser.status === "active") {
+                    checkUser.status = "lock";
                     await this.userRepository.save(checkUser);
                 }
-                else if (checkUser.status === 'lock') {
-                    checkUser.status = 'active';
+                else if (checkUser.status === "lock") {
+                    checkUser.status = "active";
                     await this.userRepository.save(checkUser);
                 }
                 else {
-                    return 'account is offline';
+                    return "account is offline";
                 }
             }
         };
@@ -189,38 +195,16 @@ class UserServices {
                 return null;
             }
             else {
-                if (checkSeller.role != 'seller' && id === idUser) {
+                if (checkSeller.role != "seller" && id === idUser) {
                     return false;
                 }
                 else {
-                    if (checkSeller.addVip === 'No') {
-                        checkSeller.addVip = 'Yes';
+                    if (checkSeller.addVip === "No") {
+                        checkSeller.addVip = "Yes";
                         await this.userRepository.save(checkSeller);
                     }
                 }
             }
-        };
-        this.sendMailService = async (email) => {
-            let transporter = nodemailer.createTransport({
-                service: "gmail",
-                auth: {
-                    user: 'tranhoangloc502@gmail.com',
-                    pass: 'enlixpabkfmylwhr',
-                },
-            });
-            await transporter.sendMail({
-                from: 'tranhoangloc502@gmail.com',
-                to: `${email}`,
-                subject: 'Đăng ký thành công',
-                text: 'Chúc mừng! Bạn đã đăng ký thành công.',
-            }, (error, info) => {
-                if (error) {
-                    console.log(error);
-                }
-                else {
-                    console.log('Email sent: ' + 'lalalalala');
-                }
-            });
         };
         this.changeCategory = async (id) => {
             let checkUser = await this.userRepository.findOneBy({ idUser: id });
@@ -228,11 +212,30 @@ class UserServices {
                 return null;
             }
             else {
-                if (checkUser.category === 'Wait') {
-                    checkUser.category = 'Add';
+                if (checkUser.category === "Wait") {
+                    checkUser.category = "Add";
                     await this.userRepository.save(checkUser);
                     let email = checkUser.gmail;
-                    await this.sendMailService(email);
+                    let transporter = nodemailer.createTransport({
+                        service: "gmail",
+                        auth: {
+                            user: "tranhoangloc502@gmail.com",
+                            pass: "enlixpabkfmylwhr",
+                        },
+                    });
+                    await transporter.sendMail({
+                        from: "tranhoangloc502@gmail.com",
+                        to: `${email}`,
+                        subject: "Đăng ký thành công",
+                        text: "Chúc mừng! Bạn đã đăng ký thành công.",
+                    }, (error, info) => {
+                        if (error) {
+                            console.log(error);
+                        }
+                        else {
+                            console.log("Email sent: " + "lalalalala");
+                        }
+                    });
                 }
             }
         };
@@ -251,14 +254,14 @@ class UserServices {
                 return null;
             }
             else {
-                if (year - checkUser.birthday.split('-')[0] > 18) {
-                    if (checkUser.ask === 'No') {
-                        checkUser.ask = 'Yes';
+                if (year - checkUser.birthday.split("-")[0] > 18) {
+                    if (checkUser.ask === "No") {
+                        checkUser.ask = "Yes";
                         await this.userRepository.save(checkUser);
                     }
                 }
                 else {
-                    return 'Bạn chưa đủ tuổi';
+                    return "Bạn chưa đủ tuổi";
                 }
             }
         };
@@ -270,14 +273,14 @@ class UserServices {
             else {
                 const d = new Date();
                 let year = d.getFullYear();
-                console.log(year - checkUser.birthday.split('-')[0]);
-                if (checkUser.role === 'user' && year - checkUser.birthday.split('-')[0] > 18) {
-                    checkUser.role = 'seller';
+                if (checkUser.role === "user" &&
+                    year - checkUser.birthday.split("-")[0] > 18) {
+                    checkUser.role = "seller";
                     await this.userRepository.save(checkUser);
                     return " Bạn đã đăng ký thành công";
                 }
                 else {
-                    return 'Bạn chưa đủ tuổi';
+                    return "Bạn chưa đủ tuổi";
                 }
             }
         };
@@ -287,8 +290,8 @@ class UserServices {
                 return null;
             }
             else {
-                if (checkUser.role == 'seller') {
-                    checkUser.role = 'Vip';
+                if (checkUser.role == "seller") {
+                    checkUser.role = "Vip";
                     await this.userRepository.save(checkUser);
                     return "Bạn đã duyệt thành công";
                 }
@@ -331,7 +334,7 @@ class UserServices {
         this.findByGmailService = async (idUser) => {
             let sql = `SELECT u.gmail
                    FROM user u
-                   where u.idUser = ${idUser}`;
+                   where  u.idUser = ${idUser}`;
             let gmail = await this.userRepository.query(sql);
             return gmail;
         };

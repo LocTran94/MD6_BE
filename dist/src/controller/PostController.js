@@ -9,7 +9,7 @@ class PostController {
     constructor() {
         this.getAllPosts = async (req, res) => {
             try {
-                let limit = 8;
+                let limit = 20;
                 let offset = 0;
                 let page = 1;
                 if (req.query.page) {
@@ -17,7 +17,7 @@ class PostController {
                     offset = (+page - 1) * limit;
                 }
                 let totalPost = await PostService_2.default.count();
-                const count = parseInt(totalPost[0]['count(idPost)']);
+                const count = parseInt(totalPost[0]["count(idPost)"]);
                 let totalPage = Math.ceil(count / limit);
                 let posts = await PostService_2.default.getAll(limit, offset);
                 let data;
@@ -27,9 +27,7 @@ class PostController {
                 }
                 else {
                 }
-                res.status(200).json({
-                    posts: posts,
-                });
+                res.status(200).json(posts);
             }
             catch (e) {
                 res.status(500).json(e.message);
@@ -37,7 +35,7 @@ class PostController {
         };
         this.getAllPosts2 = async (req, res) => {
             try {
-                let limit = 6;
+                let limit = 12;
                 let offset = 0;
                 let page = 1;
                 if (req.query.page) {
@@ -45,7 +43,7 @@ class PostController {
                     offset = (+page - 1) * limit;
                 }
                 let totalPost = await PostService_2.default.count();
-                const count = parseInt(totalPost[0]['count(idFood)']);
+                const count = parseInt(totalPost[0]["count(idFood)"]);
                 let totalPage = Math.ceil(count / limit);
                 let posts = await PostService_2.default.getAll(limit, offset);
                 let data;
@@ -55,9 +53,7 @@ class PostController {
                 }
                 else {
                 }
-                res.status(200).json({
-                    posts: posts,
-                });
+                res.status(200).json(posts);
             }
             catch (e) {
                 res.status(500).json(e.message);
@@ -78,12 +74,12 @@ class PostController {
                 let idUser = req.params.idUser;
                 let idUserTocken = req["decoded"].idUser;
                 let idPost = await this.postService.checkUserPostService(idUser);
-                if ((idUser == idUserTocken) && (req["decoded"].role === 'seller')) {
+                if (idUser == idUserTocken && req["decoded"].role === "seller") {
                     let post = await this.postService.updatePost(idPost, req.body);
                     res.status(200).json(post);
                 }
                 else {
-                    res.status(401).json('invalid');
+                    res.status(401).json("invalid");
                 }
             }
             catch (e) {
@@ -101,8 +97,18 @@ class PostController {
         };
         this.findByIdPost = async (req, res) => {
             try {
-                let idPost = req.params.id;
-                let post = await PostService_2.default.findById(idPost);
+                let idUser = req.params.idUser;
+                let post = await PostService_2.default.findPostByIdUser(idUser);
+                res.status(200).json(post);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.findByIdUser = async (req, res) => {
+            try {
+                let idUser = req.params.id;
+                let post = await PostService_2.default.findPostByIdUser(idUser);
                 res.status(200).json(post);
             }
             catch (e) {

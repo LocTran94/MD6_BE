@@ -9,8 +9,8 @@ class OrderController {
     constructor() {
         this.getAllOrdersInSeller = async (request, response) => {
             try {
-                let idPost = request.params.id;
-                let orders = await this.oderService.getAllOrdersInSellerService(idPost);
+                let idUser = request.params.id;
+                let orders = await this.oderService.getAllOrdersInSellerService(idUser);
                 response.status(200).json(orders);
             }
             catch (error) {
@@ -47,31 +47,33 @@ class OrderController {
                 let price = await this.postService.findPrice(order.idPost);
                 if (time >= 0) {
                     if (checkOrder == false) {
-                        response.status(200).json(" Bạn chưa thể thuê dịch vụ");
+                        response.status(200).json("Bạn chưa thể thuê dịch vụ");
                     }
                     else {
                         if (y > order.dateOfOrder) {
+                            console.log(77777777777);
                             order.total = (time * 24 + (x.getHours() - y.getHours())) * price;
                             order = await this.oderService.saveOrder(order);
                             response.status(200).json(order);
                         }
                         else if (y == order.dateOfOrder) {
-                            if (y.getHours() >= (order.dateOfOrder).getHours()) {
-                                order.total = (time * 24 * price + x.getHours() - y.getHours()) * price;
+                            if (y.getHours() >= order.dateOfOrder.getHours()) {
+                                order.total =
+                                    (time * 24 * price + x.getHours() - y.getHours()) * price;
                                 order = await this.oderService.saveOrder(order);
                                 response.status(200).json(order);
                             }
                             else {
-                                return "hãy chọn lại thời gian bắt đầu thuê";
+                                response.status(200).json("hãy chọn lại thời gian bắt đầu thuê");
                             }
                         }
                         else {
-                            return "hãy chọn lại ngày bắt đầu thuê";
+                            response.status(200).json("hãy chọn lại thời gian bắt đầu thuê");
                         }
                     }
                 }
                 else {
-                    response.json('Hãy chọn lại ngày thuê dịch vụ');
+                    response.status(200).json("hãy chọn lại thời gian bắt đầu thuê");
                 }
             }
             catch (error) {

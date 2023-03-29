@@ -29,7 +29,7 @@ class PostService {
                             join user u on p.idUser = u.idUser
                    where NOT u.status = 'off' limit ${limit} offset ${offset}`;
         let posts = await this.postRepository.query(sql);
-        console.log(posts)
+      
         if (!posts) {
             return 'No posts found'
         }
@@ -41,6 +41,14 @@ class PostService {
                    from user u
                             join post p on u.idUser = p.idUser
                    where p.idPost = ${id}`;
+        let post = await this.postRepository.query(sql)
+        return post;
+    }
+    findPostByIdUser = async (id) => {
+        let sql = `select *
+                   from user u
+                            join post p on u.idUser = p.idUser
+                   where p.idUser = ${id}`;
         let post = await this.postRepository.query(sql)
         return post;
     }

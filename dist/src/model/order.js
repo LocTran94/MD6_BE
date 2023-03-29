@@ -23,7 +23,7 @@ __decorate([
 ], Orders.prototype, "idUser", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Orders.prototype, "idPost", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "text" }),
@@ -40,8 +40,8 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({
         nullable: false,
-        default: () => 'DATE_ADD(NOW())',
-        type: 'timestamp',
+        default: () => "DATE_ADD(NOW())",
+        type: "timestamp",
     }),
     __metadata("design:type", Date)
 ], Orders.prototype, "dateOfOrder", void 0);

@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {adminAuth} from "../middleware/admin";
+
 import {auth} from "../middleware/auth";
 import PostController from "../controller/PostController";
 
@@ -13,3 +13,6 @@ postRouter.post('/add', PostController.createPost)
 postRouter.put('/edit/:idUser', PostController.editPost)
 postRouter.get('/showPosts', PostController.getLimitPost)
 postRouter.get('/findById/:id', PostController.findByIdPost)
+postRouter.get('/findPostByIdUser/:id', PostController.findByIdUser)
+
+

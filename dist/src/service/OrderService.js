@@ -1,7 +1,31 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const data_source_1 = require("../data-source");
 const order_1 = require("../model/order");
+const nodemailer = __importStar(require("nodemailer"));
 const user_1 = require("../model/user");
 class OrderService {
     constructor() {
@@ -10,10 +34,10 @@ class OrderService {
                    from orders o
                             join post p on o.idPost = p.idPost
                             join user u on p.idUser = u.idUser
-        `;
+                    `;
             let orders = await this.orderRepository.query(sql);
             if (!orders) {
-                return 'No orders found';
+                return "No orders found";
             }
             return orders;
         };
@@ -22,10 +46,10 @@ class OrderService {
                    from orders o
                             join post p on o.idPost = p.idPost
                             join user u on p.idUser = u.idUser
-                   where o.idPost = ${id} `;
+                   where p.idUser = ${id} `;
             let orders = await this.orderRepository.query(sql);
             if (!orders) {
-                return 'No orders found';
+                return "No orders found";
             }
             return orders;
         };
@@ -37,11 +61,12 @@ class OrderService {
                    where o.idUser = ${id}`;
             let orders = await this.orderRepository.query(sql);
             if (!orders) {
-                return 'No orders found';
+                return "No orders found";
             }
             return orders;
         };
         this.saveOrder = async (order) => {
+            console.log(1111111111111111111, order);
             return await this.orderRepository.save(order);
         };
         this.changeStatusOrderService = async (id) => {
@@ -53,10 +78,29 @@ class OrderService {
                 return null;
             }
             else {
-                if (checkOrder.statusOrder === 'Wait') {
-                    checkOrder.statusOrder = 'Approved';
+                if (checkOrder.statusOrder === "Wait") {
+                    checkOrder.statusOrder = "Approved";
                     await this.orderRepository.save(checkOrder);
-                    await this.orderRepository.sendMailService(email);
+                    let transporter = nodemailer.createTransport({
+                        service: "gmail",
+                        auth: {
+                            user: "tranhoangloc502@gmail.com",
+                            pass: "enlixpabkfmylwhr",
+                        },
+                    });
+                    await transporter.sendMail({
+                        from: "tranhoangloc502@gmail.com",
+                        to: `${email}`,
+                        subject: "Mua thành công",
+                        text: "Đơn hàng của bạn đã được nhận",
+                    }, (error, info) => {
+                        if (error) {
+                            console.log(error);
+                        }
+                        else {
+                            console.log("Email sent: " + "lalalalala");
+                        }
+                    });
                 }
             }
         };
@@ -71,8 +115,8 @@ class OrderService {
                     return false;
                 }
                 else {
-                    if (checkOrder.statusOrder === 'Approved') {
-                        checkOrder.statusOrder = 'Done';
+                    if (checkOrder.statusOrder === "Approved") {
+                        checkOrder.statusOrder = "Done";
                         await this.orderRepository.save(checkOrder);
                     }
                     else {
