@@ -13,8 +13,9 @@ class CommentController {
 
     getAllComments = async (req: Request, res: Response) => {
         try {
+            let id = req.params.id
 
-            let comments = await this.commentService.getAllCommentsService();
+            let comments = await this.commentService.getAllCommentsService(id);
 
             res.status(200).json(comments);
         } catch (e) {

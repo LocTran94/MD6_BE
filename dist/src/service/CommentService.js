@@ -4,9 +4,9 @@ const data_source_1 = require("../data-source");
 const comment_1 = require("../model/comment");
 class CommentService {
     constructor() {
-        this.getAllCommentsService = async () => {
+        this.getAllCommentsService = async (id) => {
             let sql = `select *
-                   from comment join user on comment.idUser = user.idUser `;
+                   from comment join user on comment.idUser = user.idUser where comment.idPost = ${id}`;
             let comments = await this.commentRepository.query(sql);
             if (!comments) {
                 return "No comments found";

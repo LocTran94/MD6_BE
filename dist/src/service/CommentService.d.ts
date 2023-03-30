@@ -1,7 +1,7 @@
 declare class CommentService {
     private commentRepository;
     constructor();
-    getAllCommentsService: () => Promise<any>;
+    getAllCommentsService: (id: any) => Promise<any>;
     saveCommentService: (comment: any) => Promise<string>;
     updateCommentService: (idComment: any, newComment: any) => Promise<any>;
     removeCommentService: (idComment: any) => Promise<string>;

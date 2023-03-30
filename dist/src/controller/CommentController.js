@@ -8,7 +8,8 @@ class CommentController {
     constructor() {
         this.getAllComments = async (req, res) => {
             try {
-                let comments = await this.commentService.getAllCommentsService();
+                let id = req.params.id;
+                let comments = await this.commentService.getAllCommentsService(id);
                 res.status(200).json(comments);
             }
             catch (e) {

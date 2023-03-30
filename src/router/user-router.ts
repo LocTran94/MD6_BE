@@ -17,10 +17,10 @@ userRouter.get('/userRequest/:id', UserController.checkRequest)
 userRouter.get('/showSellerProfile/:id', UserController.showSellerProfile)
 userRouter.get('/showPersonal/:id', UserController.showProvision)
 userRouter.put('/changePassword/:id', UserController.changePassword)
-userRouter.get('/findByName/:name', UserController.findByName) // tag 14 tìm kiếm theo username hoặc namePost
-userRouter.get('/findByGender/:gender', UserController.findByGender) // tag 14 tìm kiếm theo giới tính
-userRouter.get('/findByBirthday/:year', UserController.findByBirthday) // tag 14 tìm kiếm theo độ tuổi
-userRouter.put('/userAskVip/:id' ,auth,UserController.checkAddVip)// thay đổi role để thành vip
-userRouter.get('/showVip' ,auth,UserController.showVip)// show các tài khoản Vip
+userRouter.get('/findByName/:name', UserController.findByName)
+userRouter.get('/findByGender/:gender', UserController.findByGender)
+userRouter.get('/findByBirthday/:year', UserController.findByBirthday)
+userRouter.put('/userAskVip/:id' ,auth,UserController.checkAddVip)
+userRouter.get('/showVip' ,auth,UserController.showVip)
 
 
