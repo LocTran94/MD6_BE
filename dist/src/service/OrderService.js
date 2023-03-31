@@ -74,7 +74,6 @@ class OrderService {
             let idUser = checkOrder.idUser;
             let user = await this.userRepository.findOneBy({ idUser: idUser });
             let post = await this.postRepository.findOneBy({ idUser: idUser });
-            console.log(1111111111111111, post);
             let email = user.gmail;
             if (!checkOrder) {
                 return null;

@@ -9,5 +9,6 @@ export declare class Post {
     weight: number;
     measurement: string;
     price: number;
+    rent: number;
     view: number;
 }

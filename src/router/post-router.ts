@@ -14,5 +14,6 @@ postRouter.put('/edit/:idUser', PostController.editPost)
 postRouter.get('/showPosts', PostController.getLimitPost)
 postRouter.get('/findById/:id', PostController.findByIdPost)
 postRouter.get('/findPostByIdUser/:id', PostController.findByIdUser)
+postRouter.get('/countView/:id', PostController.countView)
 
 

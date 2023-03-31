@@ -96,7 +96,7 @@ class PostService {
             let sql = `select *
                    from post p
                             join user u on p.idUser = u.idUser
-                   ORDER BY view DESC limit 12`;
+                   ORDER BY rent DESC limit 6`;
             let sellers = await this.postRepository.query(sql);
             return sellers;
         };
@@ -105,7 +105,7 @@ class PostService {
                    from post p
                             join user u on p.idUser = u.idUser
                    where u.role = 'Vip'
-                   ORDER BY view DESC limit 6`;
+                   ORDER BY rent DESC limit 6`;
             let sellers = await this.postRepository.query(sql);
             return sellers;
         };
@@ -123,16 +123,21 @@ class PostService {
                    from post p
                             join user u on p.idUser = u.idUser where
                        u.gender = 'nam'
-                   ORDER BY view DESC limit 4`;
+                   ORDER BY rent DESC limit 4`;
             let MalesSellers = await this.postRepository.query(sql1);
             let sql2 = `select *
                    from post p
                             join user u on p.idUser = u.idUser where
                        u.gender = 'nữ'
-                   ORDER BY view DESC limit 8`;
+                   ORDER BY rent DESC limit 8`;
             let FemalesSellers = await this.postRepository.query(sql2);
             let sellers = { male: MalesSellers, female: FemalesSellers };
             return sellers;
+        };
+        this.countViewService = async (idPost) => {
+            let post = await this.postRepository.findOneBy({ idPost: idPost });
+            post.view += 1;
+            await this.postRepository.save(post);
         };
         this.postRepository = data_source_1.AppDataSource.getRepository(post_1.Post);
         this.userRepository = data_source_1.AppDataSource.getRepository(user_1.User);

@@ -115,6 +115,16 @@ class PostController {
                 res.status(500).json(e.message);
             }
         };
+        this.countView = async (req, res) => {
+            try {
+                let idPost = req.params.id;
+                let post = await PostService_2.default.countViewService(idPost);
+                res.status(200).json(post);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
         this.postService = PostService_1.default;
     }
 }

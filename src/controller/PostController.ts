@@ -140,6 +140,17 @@ class PostController {
       res.status(500).json(e.message);
     }
   };
+
+
+  countView = async (req, res) => {
+    try {
+      let idPost = req.params.id;
+      let post = await postService.countViewService(idPost);
+      res.status(200).json(post);
+    } catch (e) {
+      res.status(500).json(e.message);
+    }
+  }
 }
 
 export default new PostController();

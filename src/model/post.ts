@@ -28,6 +28,8 @@ export class Post {
     @Column()
     price: number;
     @Column({default: 0})
+    rent: number;
+    @Column({default: 0})
     view: number;
 
 

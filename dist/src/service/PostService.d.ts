@@ -19,6 +19,7 @@ declare class PostService {
         male: any;
         female: any;
     }>;
+    countViewService: (idPost: any) => Promise<void>;
 }
 declare const _default: PostService;
 export default _default;
