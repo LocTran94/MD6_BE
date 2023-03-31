@@ -17,6 +17,10 @@ declare class UserController {
     findByName: (req: any, res: any) => Promise<any>;
     findByGender: (req: any, res: any) => Promise<any>;
     findByBirthday: (req: any, res: any) => Promise<any>;
+    findByTopSixSeller: (req: any, res: any) => Promise<any>;
+    findByTopSixVip: (req: any, res: any) => Promise<any>;
+    findByTopTwelfthSeller: (req: any, res: any) => Promise<any>;
+    findByTopFourMalesEightFemales: (req: any, res: any) => Promise<any>;
 }
 declare const _default: UserController;
 export default _default;

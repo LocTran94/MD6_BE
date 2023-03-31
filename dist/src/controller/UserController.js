@@ -140,6 +140,43 @@ class UserController {
                 res.status(500).json(e.message);
             }
         };
+        this.findByTopSixSeller = async (req, res) => {
+            try {
+                let response = await this.postServices.findByTopSixSellerService();
+                return res.status(200).json(response);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.findByTopSixVip = async (req, res) => {
+            try {
+                let response = await this.postServices.findByTopSixVipService();
+                return res.status(200).json(response);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.findByTopTwelfthSeller = async (req, res) => {
+            try {
+                let gender = req.body.gender;
+                let response = await this.postServices.findByTopTwelfthSellerService(gender);
+                return res.status(200).json(response);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.findByTopFourMalesEightFemales = async (req, res) => {
+            try {
+                let response = await this.postServices.findByTopFourMalesEightFemalesService();
+                return res.status(200).json(response);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
         this.userServices = UserService_1.default;
         this.postServices = PostService_1.default;
         this.personalServices = PersonalService_1.default;

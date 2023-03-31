@@ -9,4 +9,5 @@ export declare class Post {
     weight: number;
     measurement: string;
     price: number;
+    view: number;
 }

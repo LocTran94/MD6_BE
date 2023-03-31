@@ -1,4 +1,3 @@
-
 import {AppDataSource} from "../data-source";
 import {Post} from "../model/post";
 import {User} from "../model/user";
@@ -16,20 +15,22 @@ class PostService {
     }
 
 
-    count=async ()=>{
-        let sql=`select count(idPost) from post `
-        let count=await this.postRepository.query(sql)
+    count = async () => {
+        let sql = `select count(idPost)
+                   from post `
+        let count = await this.postRepository.query(sql)
 
         return count
     }
 
-    getAll = async (limit,offset) => {
+    getAll = async (limit, offset) => {
         let sql = `select *
                    from post p
                             join user u on p.idUser = u.idUser
-                   where NOT u.status = 'off' limit ${limit} offset ${offset}`;
+                   where NOT u.status = 'off' limit ${limit}
+                   offset ${offset}`;
         let posts = await this.postRepository.query(sql);
-      
+
         if (!posts) {
             return 'No posts found'
         }
@@ -54,13 +55,15 @@ class PostService {
     }
 
 
-    saveService = async (post,id) => {
-        let sql = `select user.role from user where idUser = ${id}`
+    saveService = async (post, id) => {
+        let sql = `select user.role
+                   from user
+                   where idUser = ${id}`
         let result = await this.userRepository.query(sql)
 
-        if (result[0].role=== 'user'){
+        if (result[0].role === 'user') {
             return false
-        }else {
+        } else {
             return this.postRepository.save(post);
         }
 
@@ -101,7 +104,7 @@ class PostService {
     // }
 
 
-    checkUserPostService = async ( idUser) => {
+    checkUserPostService = async (idUser) => {
         let sql = `select p.idPost
                    from user u
                             join post p on p.idUser = u.idUser
@@ -126,11 +129,72 @@ class PostService {
         return profile
     }
 
-    findPrice = async (idPost)=>{
-        let sql = `SELECT price from post p where p.idPost = ${idPost}`
+    findPrice = async (idPost) => {
+        let sql = `SELECT price
+                   from post p
+                   where p.idPost = ${idPost}`
         let price = await this.postRepository.query(sql)
         return price[0].price
     }
+
+
+    findByTopSixSellerService = async () => {
+        let sql = `select *
+                   from post p
+                            join user u on p.idUser = u.idUser
+                   ORDER BY view DESC limit 12`
+        let sellers = await this.postRepository.query(sql)
+        return sellers
+    }
+
+
+    findByTopSixVipService = async () => {
+        let sql = `select *
+                   from post p
+                            join user u on p.idUser = u.idUser
+                   where u.role = 'Vip'
+                   ORDER BY view DESC limit 6`
+        let sellers = await this.postRepository.query(sql)
+        return sellers
+    }
+
+
+    findByTopTwelfthSellerService = async (gender) => {
+        let sql = `SELECT *
+                   FROM post p
+                            JOIN user u ON p.idUser = u.idUser
+                   where u.gender = '${gender}'
+                   ORDER BY date DESC limit 12`
+        let sellers = await this.postRepository.query(sql)
+        return sellers
+    }
+
+
+
+
+
+    findByTopFourMalesEightFemalesService = async () => {
+        let sql1 = `select *
+                   from post p
+                            join user u on p.idUser = u.idUser where
+                       u.gender = 'nam'
+                   ORDER BY view DESC limit 4`
+        let MalesSellers = await this.postRepository.query(sql1)
+        let sql2 = `select *
+                   from post p
+                            join user u on p.idUser = u.idUser where
+                       u.gender = 'nữ'
+                   ORDER BY view DESC limit 8`
+        let FemalesSellers = await this.postRepository.query(sql2)
+
+        let sellers = {male:MalesSellers,female:FemalesSellers}
+        return sellers
+    }
+
+
+
+
+
 
 
 }

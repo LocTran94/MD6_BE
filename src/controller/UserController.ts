@@ -165,6 +165,53 @@ class UserController {
       res.status(500).json(e.message);
     }
   };
+
+
+
+  findByTopSixSeller = async (req, res)=>{
+    try {
+      let response = await this.postServices.findByTopSixSellerService();
+      return res.status(200).json(response);
+    } catch (e) {
+      res.status(500).json(e.message);
+    }
+  }
+
+
+
+  findByTopSixVip = async (req, res)=>{
+    try {
+      let response = await this.postServices.findByTopSixVipService();
+      return res.status(200).json(response);
+    } catch (e) {
+      res.status(500).json(e.message);
+    }
+  }
+
+
+
+
+  findByTopTwelfthSeller = async (req, res)=>{
+    try {
+      let gender = req.body.gender;
+      let response = await this.postServices.findByTopTwelfthSellerService(gender);
+      return res.status(200).json(response);
+    } catch (e) {
+      res.status(500).json(e.message);
+    }
+  }
+
+
+  findByTopFourMalesEightFemales = async (req, res)=>{
+    try {
+
+      let response = await this.postServices.findByTopFourMalesEightFemalesService();
+      return res.status(200).json(response);
+    } catch (e) {
+      res.status(500).json(e.message);
+    }
+  }
+
 }
 
 export default new UserController();

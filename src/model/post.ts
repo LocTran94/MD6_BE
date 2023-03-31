@@ -27,6 +27,8 @@ export class Post {
    measurement : string;
     @Column()
     price: number;
+    @Column({default: 0})
+    view: number;
 
 
 }

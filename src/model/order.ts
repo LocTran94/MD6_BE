@@ -22,4 +22,5 @@ export class Orders {
   dateOfOrder: Date;
   @Column()
   total: number;
+
 }

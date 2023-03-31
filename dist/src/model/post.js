@@ -57,6 +57,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Post.prototype, "price", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 0 }),
+    __metadata("design:type", Number)
+], Post.prototype, "view", void 0);
 Post = __decorate([
     (0, typeorm_1.Entity)()
 ], Post);

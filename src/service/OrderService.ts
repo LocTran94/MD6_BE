@@ -2,14 +2,17 @@ import { AppDataSource } from "../data-source";
 import { Orders } from "../model/order";
 import * as nodemailer from "nodemailer";
 import { User } from "../model/user";
+import {Post } from "../model/post";
 
 class OrderService {
   private orderRepository;
   private userRepository;
+  private postRepository;
 
   constructor() {
     this.orderRepository = AppDataSource.getRepository(Orders);
     this.userRepository = AppDataSource.getRepository(User);
+    this.postRepository = AppDataSource.getRepository(Post);
   }
 
   getAllOrders = async () => {
@@ -60,6 +63,10 @@ class OrderService {
     let checkOrder = await this.orderRepository.findOneBy({ idOrder: id });
     let idUser = checkOrder.idUser;
     let user = await this.userRepository.findOneBy({ idUser: idUser });
+    let post = await this.postRepository.findOneBy({ idUser: idUser})
+
+    console.log(1111111111111111,post)
+
     let email = user.gmail;
 
     if (!checkOrder) {
@@ -67,6 +74,11 @@ class OrderService {
     } else {
       if (checkOrder.statusOrder === "Wait") {
         checkOrder.statusOrder = "Approved";
+
+        post.view += 1;
+        await this.postRepository.save(post);
+        console.log(22222222222222,post.view);
+
         await this.orderRepository.save(checkOrder);
 
         let transporter = nodemailer.createTransport({

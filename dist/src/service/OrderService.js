@@ -27,6 +27,7 @@ const data_source_1 = require("../data-source");
 const order_1 = require("../model/order");
 const nodemailer = __importStar(require("nodemailer"));
 const user_1 = require("../model/user");
+const post_1 = require("../model/post");
 class OrderService {
     constructor() {
         this.getAllOrders = async () => {
@@ -72,6 +73,8 @@ class OrderService {
             let checkOrder = await this.orderRepository.findOneBy({ idOrder: id });
             let idUser = checkOrder.idUser;
             let user = await this.userRepository.findOneBy({ idUser: idUser });
+            let post = await this.postRepository.findOneBy({ idUser: idUser });
+            console.log(1111111111111111, post);
             let email = user.gmail;
             if (!checkOrder) {
                 return null;
@@ -79,6 +82,9 @@ class OrderService {
             else {
                 if (checkOrder.statusOrder === "Wait") {
                     checkOrder.statusOrder = "Approved";
+                    post.view += 1;
+                    await this.postRepository.save(post);
+                    console.log(22222222222222, post.view);
                     await this.orderRepository.save(checkOrder);
                     let transporter = nodemailer.createTransport({
                         service: "gmail",
@@ -149,6 +155,7 @@ class OrderService {
         };
         this.orderRepository = data_source_1.AppDataSource.getRepository(order_1.Orders);
         this.userRepository = data_source_1.AppDataSource.getRepository(user_1.User);
+        this.postRepository = data_source_1.AppDataSource.getRepository(post_1.Post);
     }
 }
 exports.default = new OrderService();

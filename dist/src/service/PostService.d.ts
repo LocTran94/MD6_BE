@@ -12,6 +12,13 @@ declare class PostService {
     checkUserPostService: (idUser: any) => Promise<any>;
     checkSeller: (idPost: any) => Promise<any>;
     findPrice: (idPost: any) => Promise<any>;
+    findByTopSixSellerService: () => Promise<any>;
+    findByTopSixVipService: () => Promise<any>;
+    findByTopTwelfthSellerService: (gender: any) => Promise<any>;
+    findByTopFourMalesEightFemalesService: () => Promise<{
+        male: any;
+        female: any;
+    }>;
 }
 declare const _default: PostService;
 export default _default;

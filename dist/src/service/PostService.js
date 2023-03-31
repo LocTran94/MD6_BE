@@ -6,7 +6,8 @@ const user_1 = require("../model/user");
 class PostService {
     constructor() {
         this.count = async () => {
-            let sql = `select count(idPost) from post `;
+            let sql = `select count(idPost)
+                   from post `;
             let count = await this.postRepository.query(sql);
             return count;
         };
@@ -14,7 +15,8 @@ class PostService {
             let sql = `select *
                    from post p
                             join user u on p.idUser = u.idUser
-                   where NOT u.status = 'off' limit ${limit} offset ${offset}`;
+                   where NOT u.status = 'off' limit ${limit}
+                   offset ${offset}`;
             let posts = await this.postRepository.query(sql);
             if (!posts) {
                 return 'No posts found';
@@ -38,7 +40,9 @@ class PostService {
             return post;
         };
         this.saveService = async (post, id) => {
-            let sql = `select user.role from user where idUser = ${id}`;
+            let sql = `select user.role
+                   from user
+                   where idUser = ${id}`;
             let result = await this.userRepository.query(sql);
             if (result[0].role === 'user') {
                 return false;
@@ -82,9 +86,53 @@ class PostService {
             return profile;
         };
         this.findPrice = async (idPost) => {
-            let sql = `SELECT price from post p where p.idPost = ${idPost}`;
+            let sql = `SELECT price
+                   from post p
+                   where p.idPost = ${idPost}`;
             let price = await this.postRepository.query(sql);
             return price[0].price;
+        };
+        this.findByTopSixSellerService = async () => {
+            let sql = `select *
+                   from post p
+                            join user u on p.idUser = u.idUser
+                   ORDER BY view DESC limit 12`;
+            let sellers = await this.postRepository.query(sql);
+            return sellers;
+        };
+        this.findByTopSixVipService = async () => {
+            let sql = `select *
+                   from post p
+                            join user u on p.idUser = u.idUser
+                   where u.role = 'Vip'
+                   ORDER BY view DESC limit 6`;
+            let sellers = await this.postRepository.query(sql);
+            return sellers;
+        };
+        this.findByTopTwelfthSellerService = async (gender) => {
+            let sql = `SELECT *
+                   FROM post p
+                            JOIN user u ON p.idUser = u.idUser
+                   where u.gender = '${gender}'
+                   ORDER BY date DESC limit 12`;
+            let sellers = await this.postRepository.query(sql);
+            return sellers;
+        };
+        this.findByTopFourMalesEightFemalesService = async () => {
+            let sql1 = `select *
+                   from post p
+                            join user u on p.idUser = u.idUser where
+                       u.gender = 'nam'
+                   ORDER BY view DESC limit 4`;
+            let MalesSellers = await this.postRepository.query(sql1);
+            let sql2 = `select *
+                   from post p
+                            join user u on p.idUser = u.idUser where
+                       u.gender = 'nữ'
+                   ORDER BY view DESC limit 8`;
+            let FemalesSellers = await this.postRepository.query(sql2);
+            let sellers = { male: MalesSellers, female: FemalesSellers };
+            return sellers;
         };
         this.postRepository = data_source_1.AppDataSource.getRepository(post_1.Post);
         this.userRepository = data_source_1.AppDataSource.getRepository(user_1.User);
