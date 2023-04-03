@@ -25,6 +25,6 @@ exports.userRouter.put('/userAskVip/:id', auth_1.auth, UserController_1.default.
 exports.userRouter.get('/showVip', auth_1.auth, UserController_1.default.showVip);
 exports.userRouter.get('/showSixSeller', UserController_1.default.findByTopSixSeller);
 exports.userRouter.get('/showSixVip', UserController_1.default.findByTopSixVip);
-exports.userRouter.get('/showTwelfthTwelfthSeller', UserController_1.default.findByTopTwelfthSeller);
+exports.userRouter.get('/showTwelfthSeller', auth_1.auth, UserController_1.default.findByTopTwelfthSeller);
 exports.userRouter.get('/showTopFourMalesEightFemales', UserController_1.default.findByTopFourMalesEightFemales);
 //# sourceMappingURL=user-router.js.map

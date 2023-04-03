@@ -4,6 +4,8 @@
 
   "version": "1.0.0",
 
+  "homepage": "https://LocTran94.github.io/MD6_BE",
+
   "description": "",
 
   "main": "index.js",
@@ -14,8 +16,11 @@
 
     "build": "rimraf dist && tsc -p tsconfig.build.json",
 
-    "start:dev": "tsc-watch -p tsconfig.build.json --onSuccess \"node dist/index.js\""
+    "start:dev": "tsc-watch -p tsconfig.build.json --onSuccess \"node dist/index.js\"",
 
+    "predeploy": "npm run build",
+
+    "deploy": "gh-pages -d build"
   },
 
   "keywords": [],
@@ -79,6 +84,8 @@
     "express-fileupload": "^1.4.0",
 
     "flash": "^1.1.0",
+
+    "gh-pages": "^5.0.0",
 
     "jsonwebtoken": "^9.0.0",
 

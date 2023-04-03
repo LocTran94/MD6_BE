@@ -116,6 +116,7 @@ class UserServices {
                         idUser: userCheck.idUser,
                         username: userCheck.username,
                         role: userCheck.role,
+                        gender: userCheck.gender
                     };
                     const token = jwt.sign(payload, SECRET, {
                         expiresIn: 36000000,

@@ -24,7 +24,7 @@ userRouter.put('/userAskVip/:id' ,auth,UserController.checkAddVip)
 userRouter.get('/showVip' ,auth,UserController.showVip)
 userRouter.get('/showSixSeller' ,UserController.findByTopSixSeller)
 userRouter.get('/showSixVip' ,UserController.findByTopSixVip)
-userRouter.get('/showTwelfthTwelfthSeller' ,UserController.findByTopTwelfthSeller)
+userRouter.get('/showTwelfthSeller',auth ,UserController.findByTopTwelfthSeller)
 userRouter.get('/showTopFourMalesEightFemales' ,UserController.findByTopFourMalesEightFemales)
 
 

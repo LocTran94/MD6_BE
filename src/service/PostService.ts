@@ -160,13 +160,24 @@ class PostService {
 
 
     findByTopTwelfthSellerService = async (gender) => {
-        let sql = `SELECT *
+        if(gender === 'nam'){
+            let sql = `SELECT *
                    FROM post p
                             JOIN user u ON p.idUser = u.idUser
-                   where u.gender = '${gender}'
+                   where u.gender = 'nữ'
                    ORDER BY date DESC limit 12`
-        let sellers = await this.postRepository.query(sql)
-        return sellers
+            let sellers = await this.postRepository.query(sql)
+            return sellers
+        }else {
+            let sql = `SELECT *
+                   FROM post p
+                            JOIN user u ON p.idUser = u.idUser
+                   where u.gender = 'nam'
+                   ORDER BY date DESC limit 12`
+            let sellers = await this.postRepository.query(sql)
+            return sellers
+        }
+
     }
 
 

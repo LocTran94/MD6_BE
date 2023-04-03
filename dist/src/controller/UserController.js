@@ -160,7 +160,7 @@ class UserController {
         };
         this.findByTopTwelfthSeller = async (req, res) => {
             try {
-                let gender = req.body.gender;
+                let gender = req["decoded"].gender;
                 let response = await this.postServices.findByTopTwelfthSellerService(gender);
                 return res.status(200).json(response);
             }

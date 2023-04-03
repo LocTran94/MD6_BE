@@ -132,6 +132,7 @@ class UserServices {
                             idUser: userCheck.idUser,
                             username: userCheck.username,
                             role: userCheck.role,
+                            gender: userCheck.gender
                         };
                         const token = jsonwebtoken_1.default.sign(payload, auth_1.SECRET, {
                             expiresIn: 36000000,
